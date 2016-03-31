@@ -1,0 +1,17 @@
+/*
+Theme Name: Pi Photography
+Theme URI: http://piboutique.com/pi-photography
+Author: Andres Abello
+Author URI: http://andresabello.com
+Description: Create a professional photography portfolio fast and easy to set up. 
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: photography, photographer, piboutique, portfolio, responsive, black, white
+Text Domain: pi-photography
+
+This theme, like WordPress, is licensed under the GPL.
+*/
+
+/*Image Height bug*/
+/*.slick-slide .pi-overlay img{ height: 600px; }*/
