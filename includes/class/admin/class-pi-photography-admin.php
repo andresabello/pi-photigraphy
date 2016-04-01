@@ -49,8 +49,7 @@ class Pi_Photography_Admin {
 	 */
 	public function enqueue_styles() {
         $currentScreen = get_current_screen();
-        // Include Styles for admin options
-        wp_enqueue_style( 'thickbox' );
+
         wp_enqueue_style( 'wp-color-picker' );
         wp_register_style( 'font-awesome', STYLES . '/font-awesome.min.css', false, '4.4.0' );
         wp_register_style( 'pi-admin-css', STYLES . '/admin/css/admin-styles.css', array( 'font-awesome') );
@@ -68,10 +67,8 @@ class Pi_Photography_Admin {
         wp_enqueue_script('jquery');
         wp_enqueue_script('jquery-ui-sortable');
 
-        wp_enqueue_script( 'thickbox' );
-        wp_enqueue_script( 'media-upload' );
-        // Custom script to start thickbox
-        wp_enqueue_script( 'pi-upload', SCRIPTS . '/pi-upload.js', array( 'thickbox', 'media-upload' ) );
+		wp_enqueue_media();
+        wp_enqueue_script( 'pi-upload', SCRIPTS . '/pi-upload.js', array( 'jquery'), $this->version, 'all' );
         // Make sure to add the wp-color-picker dependecy to js file
         wp_enqueue_script( 'pi_custom_js', SCRIPTS .'/pi-picker.js', array( 'jquery', 'wp-color-picker' ), '', true  );
 
