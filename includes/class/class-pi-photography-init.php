@@ -156,9 +156,9 @@ class Pi_Photography {
 		);
 		$portfolio = array(
 		    'post_type_name' => 'pi_portfolio',
-		    'singular' => 'Portfolio',
-		    'plural' => 'Portfolios',
-		    'slug' => 'portfolio'
+		    'singular' => 'Portfolio Item',
+		    'plural' => 'Portfolio Items',
+		    'slug' => 'item'
 		);
 		$por_options = array(
 			'has_archive' => true,
