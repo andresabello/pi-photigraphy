@@ -44,27 +44,37 @@ class Pi_Custom_Meta_Box Extends Pi_Custom_Post_Type  {
 	/**
 	 * Adds the meta box container.
 	 */
-	public function add_meta_box( $post_type ) {
-			$post_type = $this->post_type;
-			
+	public function add_meta_box( ) {
+		$post_type = $this->post_type;
+
+		if($post_type == 'pi_portfolio'){
+			add_meta_box(
+				'pi_item_data',
+				__( 'Item Information', $this->theme_name ),
+				array( $this, 'render_pi_portfolio_info' ),
+				$post_type,
+				'normal',
+				'high'
+			);
+		}else{
 			add_meta_box(
 				'pi_images',
-				__( 'Slider Upload', 
-			 $this->theme_name ),
+				__( 'Slider Upload',
+					$this->theme_name ),
 				array( $this, 'render_pi_plupload' ),
 				$post_type,
 				'normal',
 				'high'
 			);
-	        add_meta_box(
-	            'pislider_shortcode',
-	            __( 'Shortcode', $this->theme_name ),
-	            array( $this, 'pi_slider_shortcode_callback' ),
-	            $post_type,
-	            'side',
-	            'low'
-	        );
-	        add_meta_box(
+			add_meta_box(
+				'pislider_shortcode',
+				__( 'Shortcode', $this->theme_name ),
+				array( $this, 'pi_slider_shortcode_callback' ),
+				$post_type,
+				'side',
+				'low'
+			);
+			add_meta_box(
 				'pislider_settings',
 				__( 'Settings', $this->theme_name ),
 				array( $this, 'render_settings_content' ),
@@ -72,6 +82,8 @@ class Pi_Custom_Meta_Box Extends Pi_Custom_Post_Type  {
 				'advanced',
 				'low'
 			);
+		}
+
 	}
 	/**
 	 * Save the meta when the post is saved.
@@ -114,16 +126,15 @@ class Pi_Custom_Meta_Box Extends Pi_Custom_Post_Type  {
 		
 		/* OK, its safe for us to save the data now. */
 		// Sanitize the user input.
-		$autoplay = sanitize_text_field( $_POST['autoplay_option'] );
-		$dots_option = sanitize_text_field($_POST['dots_option']);
-		$arrow = sanitize_text_field( $_POST['arrow_option'] );
-		// $infinite = sanitize_text_field( $_POST['infinite'] );
-		$slide_speed = (int) sanitize_text_field( $_POST['slide_speed'] );
-		$height = (int) sanitize_text_field( $_POST['height'] );
-		$opacity = sanitize_text_field( $_POST['opacity'] );
-		$color = sanitize_text_field( $_POST['color'] );
-		$caption = sanitize_text_field( $_POST['caption'] );
-		$pause_hover = sanitize_text_field( $_POST['pause_hover'] );
+		$autoplay = sanitize_text_field( isset($_POST['autoplay_option']) ? $_POST['autoplay_option'] : false );
+		$dots_option = sanitize_text_field( isset($_POST['dots_option']) ? $_POST['dots_option'] : false);
+		$arrow = sanitize_text_field( isset($_POST['arrow_option']) ? $_POST['arrow_option'] : false);
+		$slide_speed = (int) sanitize_text_field( isset($_POST['slide_speed']) ? $_POST['slide_speed'] : 300 );
+		$height = (int) sanitize_text_field( isset($_POST['height']) ? $_POST['height'] : 450 );
+		$opacity = sanitize_text_field( isset($_POST['opacity']) ? $_POST['opacity'] : true );
+		$color = sanitize_text_field( isset($_POST['color']) ? $_POST['color'] : '#212121' );
+		$caption = sanitize_text_field( isset($_POST['caption']) ? $_POST['caption'] : false );
+		$pause_hover = sanitize_text_field( isset($_POST['pause_hover']) ? $_POST['pause_hover'] : true );
 
 
 		//Validation
@@ -143,6 +154,55 @@ class Pi_Custom_Meta_Box Extends Pi_Custom_Post_Type  {
 		update_post_meta( $post_id, '_pause_hover', $pause_hover );
 		update_post_meta( $post_id, '_color', $color );
 
+	}
+	/**
+	 * Save the meta when the portfolio item is saved.
+	 *
+	 * @param int $post_id The ID of the post being saved.
+	 */
+	public function save_portfolio( $post_id ) {
+
+		/*
+		 * We need to verify this came from the our screen and with proper authorization,
+		 * because save_post can be triggered at other times.
+		 */
+
+		// Check if our nonce is set.
+		if ( ! isset( $_POST['pi_portfolio_meta_box_nonce'] ) )
+			return $post_id;
+
+		$nonce = $_POST['pi_portfolio_meta_box_nonce'];
+
+		// Verify that the nonce is valid.
+		if ( ! wp_verify_nonce( $nonce, 'pi_portfolio_meta_box' ) )
+			return $post_id;
+
+		// If this is an autosave, our form has not been submitted,
+		//     so we don't want to do anything.
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+			return $post_id;
+
+		// Check the user's permissions.
+		if ( 'page' == $_POST['post_type'] ) {
+
+			if ( ! current_user_can( 'edit_page', $post_id ) )
+				return $post_id;
+
+		} else {
+
+			if ( ! current_user_can( 'edit_post', $post_id ) )
+				return $post_id;
+		}
+
+		/* OK, its safe for us to save the data now. */
+		// Sanitize the user input.
+		$name = sanitize_text_field( $_POST['name'] );
+		$url = sanitize_text_field($_POST['url']);
+
+
+		// Update the meta field.
+		update_post_meta( $post_id, 'name', $name );
+		update_post_meta( $post_id, 'url', $url );
 	}
 	/**
 	 * Prints the box content.
@@ -464,6 +524,24 @@ class Pi_Custom_Meta_Box Extends Pi_Custom_Post_Type  {
 		$content .= '<input type="checkbox" id="'.$label.'" name="'.$label.'"';
 	    $content .= ' size="25" ' . ( $value == true ? 'checked' : "" ) . '></fieldset>';
 	    return $content;		
+	}
+
+	public function render_pi_portfolio_info($post){
+		// Add an nonce field so we can check for it later.
+		wp_nonce_field( 'pi_portfolio_meta_box', 'pi_portfolio_meta_box_nonce' );
+
+		// Use get_post_meta to retrieve an existing value from the database.
+		$name = get_post_meta( $post->ID, 'client_name', true );
+		$url = get_post_meta( $post->ID, 'client_url', true );
+
+
+		echo '<h3>Portfolio Options</h3>';
+		echo '<div class="main-options">';
+		//name
+		echo $this->render_input_text($name, 'name', 'Client or Project Name', 'Sample Name');
+		//url
+		echo $this->render_input_text($url, 'url', 'Client or Project URL', 'http://piboutique.com');
+		echo '</div>';
 	}
 	/**
 	 * Displays text for slider options

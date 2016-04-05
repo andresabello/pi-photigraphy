@@ -115,6 +115,8 @@ class Pi_Photography {
 		require_once FRAMEWORK . '/class/class-pi-photography-options.php';
 		//Load theme helper functions
 		require_once FRAMEWORK . '/pi-photography-helper.php';		
+		//Load Lipsum Library
+		require_once FRAMEWORK . '/class/class-pi-photography-lipsum.php';
 		//Start Loader
 		$this->loader = new Pi_Photography_Loader();
 
@@ -162,7 +164,7 @@ class Pi_Photography {
 		);
 		$por_options = array(
 			'has_archive' => true,
-			'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt' )
+			'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt', 'custom-fields' )
 		);
 
 		$defaults = new Pi_Directory_Default( $this->get_theme_name(), $this->get_version() );
@@ -178,7 +180,12 @@ class Pi_Photography {
 		    'plural' => 'Categories',
 		    'slug' => 'category'
 		));
-
+		$cpt_portfolios->register_taxonomy(array(
+			'taxonomy_name' => 'tag',
+			'singular' => 'Tag',
+			'plural' => 'Tags',
+			'slug' => 'tag'
+		));
 		$extras = new Pi_Photography_Extras( $this->get_theme_name(), $this->get_version() );
 		
 		$this->loader->add_action( 'after_setup_theme', $defaults, 'pi_setup' );
@@ -197,6 +204,7 @@ class Pi_Photography {
 	private function define_admin_hooks() {
 		$theme_admin = new Pi_Photography_Admin( $this->get_theme_name(), $this->get_version() );
 		$slider_meta = new Pi_Custom_Meta_Box( $this->get_theme_name(), $this->get_version(), 'pi_slider' );
+		$portfolio_meta = new Pi_Custom_Meta_Box( $this->get_theme_name(), $this->get_version(), 'pi_portfolio' );
 		$theme_options = new Pi_Photography_Theme_Options( $this->get_theme_name(), $this->get_version() );
 		// Register admin styles
 		$this->loader->add_action( 'admin_enqueue_scripts', $theme_admin, 'enqueue_styles' );
@@ -204,7 +212,9 @@ class Pi_Photography {
 		$this->loader->add_action( 'admin_enqueue_scripts', $theme_admin, 'enqueue_scripts' );
 
 		$this->loader->add_action( 'add_meta_boxes', $slider_meta, 'add_meta_box' ) ;
+		$this->loader->add_action( 'add_meta_boxes', $portfolio_meta, 'add_meta_box' ) ;
 		$this->loader->add_action( 'save_post', $slider_meta, 'save' );
+		$this->loader->add_action( 'save_post', $portfolio_meta, 'save_portfolio' );
 		$this->loader->add_action( 'wp_ajax_pi_plupload_image_upload', $slider_meta, 'pi_handle_upload');
 		$this->loader->add_action( 'wp_ajax_pi_delete_file', $slider_meta, 'pi_ajax_delete_file');
 		$this->loader->add_action( 'wp_ajax_pi_reorder_images', $slider_meta, 'pi_ajax_reorder_images');
@@ -217,7 +227,7 @@ class Pi_Photography {
         // Register page options
         $this->loader->add_action( 'admin_init', $theme_options, 'register_page_settings' );
         // Register form options
-        $this->loader->add_action( 'admin_init', $theme_options, 'register_form_settings' ); 
+		$this->loader->add_action( 'admin_init', $theme_options, 'register_form_settings' );
         // Register footer options
         $this->loader->add_action( 'admin_init', $theme_options, 'register_footer_settings' ); 
         // Register import options
@@ -226,6 +236,10 @@ class Pi_Photography {
         $this->loader->add_action( 'admin_init', $theme_options, 'register_css_settings' );         
         // Add the page to the admin menu
         $this->loader->add_action( 'admin_menu', $theme_options, 'add_plugin_page' );
+
+		//Create Demo Content Ajax
+		$this->loader->add_action( 'wp_ajax_create_listings', $theme_admin, 'pi_ajax_create_files' );
+		$this->loader->add_action( 'wp_ajax_nopriv_create_listings', $theme_admin, 'pi_ajax_create_files' );
 	}
 	/**
 	 * Register all of the hooks related to the public-facing functionality
