@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="24ac0a6d-ec92-4ec0-b495-946aa7d11231" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/js/pi-upload.js" afterPath="$PROJECT_DIR$/assets/js/pi-upload.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/class/admin/class-pi-photography-admin.php" afterPath="$PROJECT_DIR$/includes/class/admin/class-pi-photography-admin.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/class/class-pi-photography-init.php" afterPath="$PROJECT_DIR$/includes/class/class-pi-photography-init.php" />
     </list>
     <ignored path="PiPhotography.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,57 +25,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="class-pi-photography-options.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/includes/class/class-pi-photography-options.php">
+      <file leaf-file-name="class-pi-photography-default.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/includes/class/class-pi-photography-default.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1356">
-              <caret line="102" column="70" selection-start-line="102" selection-start-column="70" selection-end-line="102" selection-end-column="70" />
-              <folding>
-                <marker date="1459474814999" expanded="true" signature="21493:21789" placeholder="..." />
-                <marker date="1459474814999" expanded="true" signature="24256:24584" placeholder="..." />
-                <marker date="1459474814999" expanded="true" signature="26820:27149" placeholder="..." />
-                <marker date="1459474814999" expanded="true" signature="27534:27859" placeholder="..." />
-                <marker date="1459474814999" expanded="true" signature="29256:29581" placeholder="..." />
-                <marker date="1459474814999" expanded="true" signature="30307:30634" placeholder="..." />
-                <marker date="1459474814999" expanded="true" signature="33577:33907" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="class-pi-photography-admin.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/includes/class/admin/class-pi-photography-admin.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="70" column="105" selection-start-line="70" selection-start-column="105" selection-end-line="70" selection-end-column="105" />
+            <state relative-caret-position="-1603">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pi-upload.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/assets/js/pi-upload.js">
+      <file leaf-file-name="class-pi-photography-extras.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/includes/class/class-pi-photography-extras.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" column="47" selection-start-line="17" selection-start-column="47" selection-end-line="17" selection-end-column="47" />
-              <folding />
+            <state relative-caret-position="-1337">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1445647914000" expanded="true" signature="2352:2495" placeholder="..." />
+                <marker date="1445647914000" expanded="true" signature="2385:2478" placeholder="{...}" />
+                <marker date="1445647914000" expanded="true" signature="2552:2661" placeholder="..." />
+                <marker date="1445647914000" expanded="true" signature="2585:2644" placeholder="{...}" />
+                <marker date="1445647914000" expanded="true" signature="4424:4438" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="theme-options.php" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Documents/projects/MST6 2/includes/theme-options.php">
+      <file leaf-file-name="class-pi-photography-init.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/includes/class/class-pi-photography-init.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="90" column="105" selection-start-line="90" selection-start-column="105" selection-end-line="90" selection-end-column="131" />
-              <folding>
-                <marker date="1457487838470" expanded="true" signature="29669:29965" placeholder="..." />
-                <marker date="1457487838470" expanded="true" signature="34460:34788" placeholder="..." />
-                <marker date="1457487838470" expanded="true" signature="37042:37371" placeholder="..." />
-                <marker date="1457487838470" expanded="true" signature="37761:38086" placeholder="..." />
-                <marker date="1457487838470" expanded="true" signature="39483:39808" placeholder="..." />
-                <marker date="1457487838470" expanded="true" signature="40544:40871" placeholder="..." />
-              </folding>
+            <state relative-caret-position="327">
+              <caret line="159" column="35" selection-start-line="159" selection-start-column="35" selection-end-line="159" selection-end-column="35" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -90,11 +70,11 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/includes/class/class-pi-custom-post-type.php" />
-        <option value="$PROJECT_DIR$/includes/class/class-pi-photography-init.php" />
         <option value="$PROJECT_DIR$/includes/class/class-pi-custom-meta-box.php" />
-        <option value="$PROJECT_DIR$/includes/class/class-pi-photography-options.php" />
         <option value="$PROJECT_DIR$/includes/class/admin/class-pi-photography-admin.php" />
         <option value="$PROJECT_DIR$/assets/js/pi-upload.js" />
+        <option value="$PROJECT_DIR$/includes/class/class-pi-photography-options.php" />
+        <option value="$PROJECT_DIR$/includes/class/class-pi-photography-init.php" />
       </list>
     </option>
   </component>
@@ -166,11 +146,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
+              <option name="myItemId" value="includes" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -184,7 +160,11 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
+              <option name="myItemId" value="includes" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="class" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -249,12 +229,12 @@
       <updated>1459387727927</updated>
       <workItem from="1459387729625" duration="8438000" />
       <workItem from="1459472209739" duration="3924000" />
-      <workItem from="1459517613069" duration="2648000" />
+      <workItem from="1459517613069" duration="7120000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15010000" />
+    <option name="totallyTimeSpent" value="19482000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -264,19 +244,19 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -300,13 +280,13 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1459474814999" expanded="true" signature="21493:21789" placeholder="..." />
-            <marker date="1459474814999" expanded="true" signature="24256:24584" placeholder="..." />
-            <marker date="1459474814999" expanded="true" signature="26820:27149" placeholder="..." />
-            <marker date="1459474814999" expanded="true" signature="27534:27859" placeholder="..." />
-            <marker date="1459474814999" expanded="true" signature="29256:29581" placeholder="..." />
-            <marker date="1459474814999" expanded="true" signature="30307:30634" placeholder="..." />
-            <marker date="1459474814999" expanded="true" signature="33577:33907" placeholder="..." />
+            <marker date="1459524023757" expanded="true" signature="20730:21026" placeholder="..." />
+            <marker date="1459524023757" expanded="true" signature="23628:23956" placeholder="..." />
+            <marker date="1459524023757" expanded="true" signature="26264:26593" placeholder="..." />
+            <marker date="1459524023757" expanded="true" signature="26978:27303" placeholder="..." />
+            <marker date="1459524023757" expanded="true" signature="28766:29091" placeholder="..." />
+            <marker date="1459524023757" expanded="true" signature="30168:30495" placeholder="..." />
+            <marker date="1459524023757" expanded="true" signature="33438:33768" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -336,29 +316,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="674" column="0" selection-start-line="674" selection-start-column="0" selection-end-line="683" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/class/class-pi-photography-init.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="880">
-          <caret line="166" column="0" selection-start-line="166" selection-start-column="0" selection-end-line="166" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/class/class-pi-photography-options.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1356">
-          <caret line="102" column="70" selection-start-line="102" selection-start-column="70" selection-end-line="102" selection-end-column="70" />
-          <folding>
-            <marker date="1459474814999" expanded="true" signature="21493:21789" placeholder="..." />
-            <marker date="1459474814999" expanded="true" signature="24256:24584" placeholder="..." />
-            <marker date="1459474814999" expanded="true" signature="26820:27149" placeholder="..." />
-            <marker date="1459474814999" expanded="true" signature="27534:27859" placeholder="..." />
-            <marker date="1459474814999" expanded="true" signature="29256:29581" placeholder="..." />
-            <marker date="1459474814999" expanded="true" signature="30307:30634" placeholder="..." />
-            <marker date="1459474814999" expanded="true" signature="33577:33907" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -433,6 +390,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/pi-upload.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="47" selection-start-line="17" selection-start-column="47" selection-end-line="17" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/includes/class/admin/class-pi-photography-admin.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="301">
@@ -441,10 +406,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/pi-upload.js">
+    <entry file="file://$PROJECT_DIR$/includes/class/class-pi-photography-options.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="47" selection-start-line="17" selection-start-column="47" selection-end-line="17" selection-end-column="47" />
+        <state relative-caret-position="14399">
+          <caret line="847" column="37" selection-start-line="847" selection-start-column="37" selection-end-line="847" selection-end-column="37" />
+          <folding>
+            <marker date="1459524023757" expanded="true" signature="20730:21026" placeholder="..." />
+            <marker date="1459524023757" expanded="true" signature="23628:23956" placeholder="..." />
+            <marker date="1459524023757" expanded="true" signature="26264:26593" placeholder="..." />
+            <marker date="1459524023757" expanded="true" signature="26978:27303" placeholder="..." />
+            <marker date="1459524023757" expanded="true" signature="28766:29091" placeholder="..." />
+            <marker date="1459524023757" expanded="true" signature="30168:30495" placeholder="..." />
+            <marker date="1459524023757" expanded="true" signature="33438:33768" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/class/class-pi-photography-default.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1603">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/class/class-pi-photography-extras.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1337">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1445647914000" expanded="true" signature="2352:2495" placeholder="..." />
+            <marker date="1445647914000" expanded="true" signature="2385:2478" placeholder="{...}" />
+            <marker date="1445647914000" expanded="true" signature="2552:2661" placeholder="..." />
+            <marker date="1445647914000" expanded="true" signature="2585:2644" placeholder="{...}" />
+            <marker date="1445647914000" expanded="true" signature="4424:4438" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/class/class-pi-photography-init.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="159" column="35" selection-start-line="159" selection-start-column="35" selection-end-line="159" selection-end-column="35" />
           <folding />
         </state>
       </provider>

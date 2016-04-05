@@ -87,16 +87,46 @@ function pi_add_columns( $atts, $content = null ) {
 
     return $html;
 }
-// add_action( 'init', 'wptuts_buttons' );
-// function wptuts_buttons() {
-//     add_filter( "mce_external_plugins", "pi_add_editor_button" );
-//     add_filter( 'mce_buttons', 'wptuts_register_buttons' );
-// }
-// function pi_add_editor_button( $plugin_array ) {
-//     $plugin_array['wptuts'] = get_template_directory_uri() . '/wptuts-editor-buttons/wptuts-plugin.js';
-//     return $plugin_array;
-// }
-// function wptuts_register_buttons( $buttons ) {
-//     array_push( $buttons, 'dropcap', 'showrecent' ); // dropcap', 'recentposts
-//     return $buttons;
-// }
+
+add_action('admin_init', 'print_slider', 20);
+
+function print_slider(){
+//    $args = array(
+//        'posts_per_page'   => -1,
+//        'post_type'        => 'pi_slider',
+//        'post_status'      => 'publish',
+//        'suppress_filters' => true
+//    );
+//    $posts_array = get_posts( $args );
+//    foreach ($posts_array as $key => $value){
+//        echo '<div class="container">';
+//        var_dump(get_post_meta($value->ID, 'pi_plupload'));
+//        echo '</div>';
+//    }
+//
+//    $query_images_args = array(
+//        'post_type'      => 'attachment',
+//        'post_mime_type' => 'image',
+//        'post_status'    => 'inherit',
+//        'posts_per_page' => 5,
+//    );
+//
+//    $query_images = new WP_Query( $query_images_args );
+//
+//    $images = array();
+//    foreach ( $query_images->posts as $image ) {
+//        $images[$image->ID] = wp_get_attachment_url( $image->ID );
+//    }
+//
+//
+//    var_dump($images);
+
+//    $pi_options = get_option('pi_general_settings');
+//    $dir = get_theme_root() . '/PiPhotography/assets/demo/img/';
+//    $images = glob($dir . "logo.png");
+//    $img_index = $images[0];
+//    $img_url = PIMAIN . '/' . substr($img_index, strpos($img_index, "assets"));
+//    $pi_options['pi_logo'] = $img_url;
+//    update_option('pi_general_settings', $pi_options);
+
+}

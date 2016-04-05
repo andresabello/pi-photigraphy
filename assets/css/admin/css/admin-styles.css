@@ -211,3 +211,47 @@ i.mce-i-grid:before {
     font-family: 'FontAwesome';
     color: #33a5d0;
 }
+.pi-notice{
+	background-color: #ffffff;
+	padding: 20px;
+	border: 1px solid #cccccc;
+	margin: 20px 0;
+}
+.pi-notice button{
+	background-color: #23527c;
+	color: #ffffff;
+	border: 0;
+	box-shadow: none;
+	padding: 5px 25px;
+	cursor: pointer;
+	-webkit-transition: background-color .5s ease-in-out;
+	-moz-transition: background-color .5s ease-in-ot;
+	-ms-transition: background-color .5s ease-in-ot;
+	-o-transition: background-color .5s ease-in-ot;
+	transition: background-color .5s ease-in-ot;
+}
+.pi-notice button:hover{
+	background-color: #33a5d0;
+}
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+#progress-bar{
+	background: #fff;
+	width: 500px;
+	display: block;
+	clear: both;
+	height: 20px;
+	border: 5px solid #ccc;
+	border-radius: 200px;
+	padding: 2px;
+}
+#progress-bar .percent{
+	width: 0;
+	background: #0073aa;
+	height: 20px;
+	display: inline-block;
+	border-radius: 200px;
+	color: #fff;
+}
