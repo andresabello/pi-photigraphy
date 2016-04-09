@@ -16,7 +16,9 @@ get_header();
         <div class="col-8 pi-content">
             <?php 
             if(have_posts()) : while(have_posts()) : the_post();
-                 the_content();
+                $id = get_the_ID();
+                var_dump(get_post($id)->post_title);
+                the_content();
                 endwhile; else:?>
                 <p><?php _e('No pages were found. Sorry!'); ?></p>
             <?php endif; ?> 

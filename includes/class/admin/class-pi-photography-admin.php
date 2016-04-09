@@ -101,8 +101,9 @@ class Pi_Photography_Admin {
 
 		$files = 20;
 		if( $current_file >= $files ){
-			$this->pi_create_slider();
+			$this->pi_create_slider($current_file);
 			$this->add_theme_options();
+			$this->add_demo_pages();
 			wp_send_json_success( 'done' );
 		}else{
 			//Create the posts...Here we should fetch the stored api and then request the
@@ -167,8 +168,8 @@ class Pi_Photography_Admin {
 		}
 	}
 	public function add_theme_options() {
-		$pi_options = get_option('pi_general_settings');
-
+		$pi_options = array();
+		$option_name = 'pi_general_settings' ;
 		$img_url = $this->get_image_logo_from_demo();
 		//Logo
 		$pi_options['pi_logo'] = $img_url;
@@ -177,9 +178,58 @@ class Pi_Photography_Admin {
 		$pi_options['pi_main_color_picker'] = '#fdfdfd';
 		$pi_options['pi_second_color_picker'] = '#dc724d';
 		$pi_options['sidebar_general_position'] = 'right';
-		$pi_options['pi_font_family'] = 'Lato';
-		update_option('pi_general_settings', $pi_options);
 
+		if ( get_option( $option_name ) !== false ) {
+			// The option already exists, so we just update it.
+			update_option( $option_name, $pi_options );
+
+		} else {
+			// The option hasn't been added yet. We'll add it with $autoload set to 'no'.
+			$deprecated = null;
+			$autoload = 'no';
+			add_option( $option_name, $pi_options, $deprecated, $autoload );
+		}
+
+	}
+	public function add_demo_pages(){
+		$pages = array('home', 'about', 'blog', 'portfolio', 'contact');
+		$faker = $this->generate_faker();
+		foreach ($pages as $page){
+			$data = array(
+				'post_title'    => ucwords( $page ),
+				'post_content'  => $faker['content'],
+				'post_status'   => 'publish',
+				'post_author'   => get_current_user_id(),
+				'post_type'		=> 'page'
+			);
+			$post_id = wp_insert_post( $data );
+
+			if( $post_id ){
+				$this->pi_add_page_meta($post_id, $page);
+			}
+		}
+	}
+	public function pi_add_page_meta($post_id, $page){
+		if($page === 'portfolio'){
+			update_post_meta( $post_id, '_wp_page_template', 'page-portfolio.php');
+			update_post_meta( $post_id, 'page_template', 'page-portfolio.php');
+		}
+		if($page === 'contact'){
+			update_post_meta( $post_id, '_wp_page_template', 'page-contact.php');
+			update_post_meta( $post_id, 'page_template', 'page-contact.php');
+		}
+		if($page === 'home'){
+			update_option( 'show_on_front', 'page' );
+			update_option( 'page_on_front', $post_id );
+		}
+		if ($page === 'blog'){
+			$images = $this->get_images(1);
+			foreach ($images as $key => $image){
+				$new = $key;
+			}
+			set_post_thumbnail($post_id, $new);
+			update_option( 'page_for_posts', $post_id );
+		}
 	}
 	public function generate_faker(){
 		$faker = array();

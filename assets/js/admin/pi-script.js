@@ -26,11 +26,12 @@ jQuery(document).ready(function($){
             success: function( response, textStatus, XMLHttpRequest ) {
                 if( response.data === 'done' ){
                     alert(response.data);
+                    location.reload();
                 }else{
                     createListings( response.data, total );
                     $( '#current-file' ).val( response.data );
 
-                    percent = ( response.data / total ) * 10;
+                    percent = ( response.data / total ) * 100;
                     $( '#print-current' ).text( percent.toFixed(2) + '%' );
                     $( '#progress-bar' ).find('.percent').animate({
                         "width": percent.toFixed(2) + "%",
