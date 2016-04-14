@@ -184,7 +184,6 @@ function pi_add_http( $url ) {
 	        $url = "http://" . $url;
 	    }		
 	}
-
     return $url;
 }
 
@@ -249,7 +248,7 @@ function pi_format_phone($phone){
 
 
 // Breadcrumbs for website
-function ac_breadcrumbs() {
+function pi_breadcrumbs() {
 	echo '<a href="';
 	echo get_option('home');
 	echo '">';
@@ -273,9 +272,78 @@ function ac_breadcrumbs() {
         }
 }
 function display_breadcrumbs() {?>
-	<div class="breadcrumbs"><?php ac_breadcrumbs(); ?></div><?php
+	<div class="breadcrumbs"><?php pi_breadcrumbs(); ?></div><?php
 }
 add_action('ac_hook_after_header','display_breadcrumbs');
+
+function pi_get_portfolio_items($num = -1){
+	/*Get all pi_slider posts*/
+	$args = array(
+		'posts_per_page'   => $num,
+		'offset'           => 0,
+		'orderby'          => 'post_date',
+		'order'            => 'DESC',
+		'post_type'        => 'pi_portfolio',
+		'post_status'      => 'publish'
+	);
+	/*Portfolio Query*/
+	$items = get_posts( $args );
+	$grid_class = 'col-4';
+
+	$cat_args = array(
+		'taxonomy' => 'category',
+		'orderby'  => 'name',
+		'order'    => 'DESC',
+		'exclude'  => 1
+	);
+	$all_cats = get_categories($cat_args);
+	ob_start();
+	?>
+	<div class="pi-portfolio-wrapper row">
+		<div class="row">
+			<div class="col-8">
+				<ul class="portfolio-sorting list-inline text-center">
+					<li><a href="#" data-group="all" class="active">All</a></li>
+					<?php
+					foreach ($all_cats as $cat){
+						echo '<li><a href="#" data-group="'. $cat->cat_name .'">' . ucwords($cat->cat_name) . '</a></li>';
+					}
+					?>
+				</ul>
+			</div>
+		</div>
+		<div class="portfolio-items list-unstyled" id="grid">
+			<?php
+			foreach($items as $item) {
+				$categories = get_the_category($item->ID);
+				$cat_num = count($categories);
+				$cat = '';
+				$i = 1;
+				foreach ($categories as $key => $category){
+					$cat .= $category->cat_name;
+					$cat .= ( $i < $cat_num) ? ', ' : '';
+					$i++;
+				}
+				?>
+				<div class="portfolio-item <?php echo $grid_class; ?>" data-groups='["<?php echo $cat; ?>"]'>
+					<?php echo get_the_post_thumbnail ($item->ID, 'large', array('class' => 'img-responsive')); ?>
+					<figure class="portfolio-item__details">
+						<figcaption class="portfolio-item__title"><?php echo $item->post_title; ?></figcaption>
+						<p class="portfolio-item__tags"><?php echo $cat; ?></p>
+					</figure>
+				</div>
+				<?php
+			}
+			?>
+		</div>
+	</div>
+	<?php
+	$html = ob_get_contents();
+	ob_end_clean();
+	/* Restore original Post Data */
+	wp_reset_postdata();
+	return $html;
+}
 
 
 

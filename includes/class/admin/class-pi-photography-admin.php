@@ -48,8 +48,6 @@ class Pi_Photography_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-        $currentScreen = get_current_screen();
-
         wp_enqueue_style( 'wp-color-picker' );
         wp_register_style( 'font-awesome', STYLES . '/font-awesome.min.css', false, '4.4.0' );
         wp_register_style( 'pi-admin-css', STYLES . '/admin/css/admin-styles.css', array( 'font-awesome') );

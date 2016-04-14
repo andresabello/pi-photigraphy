@@ -5,11 +5,12 @@ Template Name: Portfolio Page
 get_header();
 ?>
 <!-- MAIN CONTENT CONTAINER START-->
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <div class="col-12 pi-content">
             <?php 
             if(have_posts()) : while(have_posts()) : the_post();
+                 echo pi_get_portfolio_items();
                  the_content();
                 endwhile; else:?>
                 <p><?php _e('No pages were found. Sorry!'); ?></p>

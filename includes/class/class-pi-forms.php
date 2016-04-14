@@ -141,11 +141,10 @@ class Pi_Photography_Theme_Forms {
 			$ip = $this->find_users_ip();
 			$current_time = time();
 
-			$to = array('aabello@recoveryhealthcaresystems.com');
+			$to = array('abellowins@gmail.com');
 			$subject = get_bloginfo('name') . ' Contact';
 			$message = $this->pi_get_message( $posted );
-			// $to = array('management@treatsearch.com', 'leads@treatsearch.com' , 'development@treatsearch.com');
-			$headers[] = 'From: ' . get_bloginfo('name') . ' /<helpline@fordetox.com>';
+			$headers[] = 'From: ' . get_bloginfo('name') . ' /<me@andresabello.com>';
 			/*Send Email*/
 	    	wp_mail( $to, $subject, $message, $headers );
 
