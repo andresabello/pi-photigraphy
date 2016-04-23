@@ -82,10 +82,21 @@ class Pi_Photography_Admin {
 		wp_localize_script( 'pi-script', 'pi_import_ajax', $data );
         
         if( $currentScreen->id === "pi_slider" ) {
-            wp_enqueue_script( 'pi-plupload', SCRIPTS . '/pi-plupload.js', array( 'jquery','wp-ajax-response', 'plupload-all' ), '1.0.0', true );
+            wp_enqueue_script( 'pi-plupload', SCRIPTS . '/pi-plupload.js', array(
+				'jquery',
+				'wp-ajax-response',
+				'plu
+				pload-all'), '1.0.0', true
+			);
             /** localize script to handle ajax using wordpress and not an outside source. piajax is your ajax varible **/
-            wp_localize_script( 'pi-plupload', 'piajax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ), 'imgs' => IMAGES ));
-            wp_localize_script( 'pi-plupload', 'piFile', array( 'maxFileUploadsSingle' => __( 'You may only upload maximum %d file', $this->theme_name ), 'maxFileUploadsPlural' => __( 'You may only upload maximum %d files', $this->theme_name ),));
+            wp_localize_script( 'pi-plupload', 'piajax', array(
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'imgs' => IMAGES )
+			);
+            wp_localize_script( 'pi-plupload', 'piFile', array(
+				'maxFileUploadsSingle' => __( 'You may only upload maximum %d file', $this->theme_name ),
+				'maxFileUploadsPlural' => __( 'You may only upload maximum %d files', $this->theme_name ),)
+			);
         }
 
 	}
@@ -115,6 +126,7 @@ class Pi_Photography_Admin {
 	 */
 	public function pi_create_item($value) {
 		$title = $this->get_image_name($value);
+        $title = str_replace('.jpg', '', $title);
 		$faker = $this->generate_faker();
 		$pi_post = array(
 			'post_title'    => wp_strip_all_tags( $title ),
@@ -123,9 +135,11 @@ class Pi_Photography_Admin {
 			'post_author'   => get_current_user_id(),
 			'post_type'     => 'pi_portfolio',
 		);
+
 		// Insert the post into the database
 		$post_id = wp_insert_post( $pi_post );
 		if( $post_id ){
+            $this->pi_create_categories($post_id, $title);
 			update_post_meta( $post_id, 'name', 'Sample Name' );
 			update_post_meta( $post_id, 'url', 'http://piboutique.com' );
 			$image_url = $this->get_image_from_demo($value);
@@ -133,6 +147,66 @@ class Pi_Photography_Admin {
 		}
 
 		return $value + 1;
+	}
+	public function pi_create_categories($post_id, $name){
+		$categories = array('animals', 'city', 'outdoors', 'people', 'sea', 'sky', 'soccer');
+        $taxonomy = 'pi_portfolio';
+        switch ($name){
+            case 'cabin':
+                wp_set_post_terms( $post_id, array('outdoors'), $taxonomy);
+                break;
+            case 'wave':
+                wp_set_post_terms( $post_id, array('sea'), $taxonomy);
+                break;
+            case 'tiger':
+                wp_set_post_terms( $post_id, array('animals'), $taxonomy);
+                break;
+            case 'stars':
+                wp_set_post_terms( $post_id, array('sky'), $taxonomy);
+                break;
+            case 'soccer-stadium':
+                wp_set_post_terms( $post_id, array('soccer'), $taxonomy);
+                break;
+            case 'person':
+                wp_set_post_terms( $post_id, array('people'), $taxonomy);
+                break;
+            case 'paris':
+                wp_set_post_terms( $post_id, array('city'), $taxonomy);
+                break;
+            case 'outdoor-work':
+                wp_set_post_terms( $post_id, array('outdoors', 'people'), $taxonomy);
+                break;
+            case 'mountains':
+                wp_set_post_terms( $post_id, array('outdoors'), $taxonomy);
+                break;
+            case 'miami':
+                wp_set_post_terms( $post_id, array('city'), $taxonomy);
+                break;
+            case 'man':
+                wp_set_post_terms( $post_id, array('people'), $taxonomy);
+                break;
+            case 'leaves':
+                wp_set_post_terms( $post_id, array('outdoors'), $taxonomy);
+                break;
+            case 'kiss':
+                wp_set_post_terms( $post_id, array('people'), $taxonomy);
+                break;
+            case 'forest':
+                wp_set_post_terms( $post_id, array('outdoors'), $taxonomy);
+                break;
+            case 'family':
+                wp_set_post_terms( $post_id, array('people'), $taxonomy);
+                break;
+            case 'dog':
+                wp_set_post_terms( $post_id, array('animals'), $taxonomy);
+                break;
+            case 'city':
+                wp_set_post_terms( $post_id, array('city', 'outdoors'), $taxonomy);
+                break;
+            case 'castle':
+                wp_set_post_terms( $post_id, array('outdoors'), $taxonomy);
+                break;
+        }
 	}
 	/**
 	 *Creates Portfolio Item
