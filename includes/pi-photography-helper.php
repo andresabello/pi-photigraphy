@@ -288,7 +288,7 @@ function pi_get_portfolio_items($num = -1){
 	);
 	/*Portfolio Query*/
 	$items = get_posts( $args );
-	$grid_class = 'col-4';
+	$grid_class = 'col-3';
 
 	$cat_args = array(
 		'taxonomy' => 'category',
@@ -302,14 +302,14 @@ function pi_get_portfolio_items($num = -1){
 	<div class="pi-portfolio-wrapper row">
 		<div class="row">
 			<div class="col-8">
-				<ul class="portfolio-sorting list-inline text-center">
-					<li><a href="#" data-group="all" class="active">All</a></li>
+				<select name="categories" class="portfolio-sorting list-inline text-center">
+					<option data-group="all" class="active">All</option>
 					<?php
 					foreach ($all_cats as $cat){
-						echo '<li><a href="#" data-group="'. $cat->cat_name .'">' . ucwords($cat->cat_name) . '</a></li>';
+						echo '<option data-group="'. $cat->cat_name .'">' . ucwords($cat->cat_name) . '</option>';
 					}
 					?>
-				</ul>
+				</select>
 			</div>
 		</div>
 		<div class="portfolio-items list-unstyled" id="grid">
@@ -321,11 +321,11 @@ function pi_get_portfolio_items($num = -1){
 				$i = 1;
 				foreach ($categories as $key => $category){
 					$cat .= $category->cat_name;
-					$cat .= ( $i < $cat_num) ? ', ' : '';
+					$cat .= ( $i < $cat_num) ? ',' : '';
 					$i++;
 				}
 				?>
-				<div class="portfolio-item <?php echo $grid_class; ?>" data-groups='["<?php echo $cat; ?>"]'>
+				<div class="portfolio-item <?php echo $grid_class; ?>" data-groups="<?php echo $cat; ?>">
 					<?php echo get_the_post_thumbnail ($item->ID, 'large', array('class' => 'img-responsive')); ?>
 					<figure class="portfolio-item__details">
 						<figcaption class="portfolio-item__title"><?php echo $item->post_title; ?></figcaption>

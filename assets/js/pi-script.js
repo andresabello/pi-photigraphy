@@ -5,6 +5,8 @@ jQuery(document).ready(function($){
             $(this).find( ".pi-hover" ).stop().slideToggle('slow');
         }        
     });
+    
+    
     $( ".pi-view" ).click(function() {
         var id = $(this).data('id');
         var current = $('.pi-column').attr('class').split(' ')[1];
@@ -19,7 +21,7 @@ jQuery(document).ready(function($){
         // console.log( current );
     });
     
-    /*Slider JQuery*/
+    //Slider JQuery
     $( '.pi-slider' ).each( function(){
         var sliderID = $(this).find('.slider-settings').data('id');
         var autoPlay = $(this).find('.slider-settings').data('autoplay');

@@ -2,20 +2,29 @@ jQuery(document).ready(function($){
     var $grid = $('#grid');
 
     $grid.shuffle({
-        itemSelector: '.portfolio-item' // the selector for the items in the grid
+        speed: 500,
+        easing: 'ease-in-out',
+        itemSelector: '.portfolio-item',
+        delimeter: ','
     });
 
-    $('.portfolio-sorting a').click(function (e) {
+    $('.portfolio-sorting').on('change', function (e) {
         e.preventDefault();
-
-        // set active class
-        $('.portfolio-sorting a').removeClass('active');
-        $(this).addClass('active');
-
+        //get option selected
+        var option = $("option:selected", this);
         // get group name from clicked item
-        var groupName = $(this).attr('data-group');
+        var groupName = option.attr('data-group');
+        // set active class
+        $('.portfolio-sorting').find('.active').removeClass('active');
+        option.addClass('active');
 
         // reshuffle grid
         $grid.shuffle('shuffle', groupName );
     });
+
+    //Hover Title and Tags
+    $( ".portfolio-item" ).hover( function() {
+        $(this).find( ".pi-hover" ).stop().slideToggle('slow');
+    });
+
 });
