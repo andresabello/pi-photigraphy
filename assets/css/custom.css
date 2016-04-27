@@ -596,7 +596,9 @@ hr {
     margin-top: 24px;
     position: relative;
 }
-
+.portfolio-item .img-responsive{
+    height: 250px;
+}
 .portfolio-item .portfolio-item__details{
     position: absolute;
     bottom: 0;
