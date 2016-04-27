@@ -340,11 +340,12 @@ function pi_get_portfolio_items($num = -1){
 				<div class="portfolio-item <?php echo $grid_class; ?>" data-groups="<?php echo $cat; ?>">
 					<?php echo get_the_post_thumbnail ($item->ID, 'large', array('class' => 'img-responsive')); ?>
 					<figure class="portfolio-item__details" style="width: <?php echo $col_width; ?>;">
-						<figcaption class="portfolio-item__title"><?php echo $item->post_title; ?></figcaption>
+						<figcaption class="portfolio-item__title"><a href="<?php echo esc_url(get_permalink($item->ID))?>"><?php echo $item->post_title; ?></a></figcaption>
 						<p class="portfolio-item__tags"><?php echo $cat; ?></p>
 					</figure>
 				</div>
 				<?php
+
 			}
 			?>
 		</div>

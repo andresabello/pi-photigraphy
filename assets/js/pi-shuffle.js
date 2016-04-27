@@ -5,7 +5,8 @@ jQuery(document).ready(function($){
         speed: 500,
         easing: 'ease-in-out',
         itemSelector: '.portfolio-item',
-        delimeter: ','
+        delimeter: ',',
+        initialSort: 'all'
     });
 
     $('.portfolio-sorting').on('change', function (e) {
@@ -24,7 +25,7 @@ jQuery(document).ready(function($){
 
     //Hover Title and Tags
     $( ".portfolio-item" ).hover( function() {
-        $(this).find( ".pi-hover" ).stop().slideToggle('slow');
+        $(this).find(".portfolio-item__details").stop().slideToggle('slow');
     });
 
 });
