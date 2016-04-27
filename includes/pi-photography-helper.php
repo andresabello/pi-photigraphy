@@ -288,7 +288,19 @@ function pi_get_portfolio_items($num = -1){
 	);
 	/*Portfolio Query*/
 	$items = get_posts( $args );
-	$grid_class = 'col-3';
+	$grid_class = 'col-4';
+
+	switch ($grid_class){
+		case 'col-3':
+			$col_width = '262.5px';
+			break;
+		case 'col-4':
+			$col_width = '360px';
+			break;
+		case 'col-6':
+			$col_width = '555px';
+			break;
+	}
 
 	$cat_args = array(
 		'taxonomy' => 'category',
@@ -327,7 +339,7 @@ function pi_get_portfolio_items($num = -1){
 				?>
 				<div class="portfolio-item <?php echo $grid_class; ?>" data-groups="<?php echo $cat; ?>">
 					<?php echo get_the_post_thumbnail ($item->ID, 'large', array('class' => 'img-responsive')); ?>
-					<figure class="portfolio-item__details">
+					<figure class="portfolio-item__details" style="width: <?php echo $col_width; ?>;">
 						<figcaption class="portfolio-item__title"><?php echo $item->post_title; ?></figcaption>
 						<p class="portfolio-item__tags"><?php echo $cat; ?></p>
 					</figure>
