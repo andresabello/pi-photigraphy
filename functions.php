@@ -132,3 +132,31 @@ function pi_add_columns( $atts, $content = null ) {
 //    var_dump($wp_query);
 //
 //}
+
+add_action('admin_init', 'add_category');
+function add_category(){
+    $args = array(
+        'posts_per_page'   => -1,
+        'post_status'      => 'publish',
+        'post_type'        => 'pi_portfolio',
+        'suppress_filters' => true
+    );
+    $posts_array = get_posts( $args );
+    foreach ($posts_array as $post){
+        $is = wp_set_post_terms( $post->ID, array('outdoors'), 'portfolio_cat');
+        var_dump($is);
+    }
+//    $args = array(
+//        'public'   => true,
+//        '_builtin' => false,
+//        'name'     => 'portfolio_cat'
+//    );
+//    $output = 'names'; // or objects
+//    $operator = 'and'; // 'and' or 'or'
+//    $taxonomies = get_taxonomies( $args, $output, $operator );
+//    if ( $taxonomies ) {
+//        foreach ( $taxonomies  as $taxonomy ) {
+//            echo '<p>' . $taxonomy . '</p>';
+//        }
+//    }
+}
