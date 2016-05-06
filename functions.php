@@ -133,7 +133,7 @@ function pi_add_columns( $atts, $content = null ) {
 //
 //}
 
-add_action('admin_init', 'add_category');
+//add_action('admin_init', 'add_category');
 function add_category(){
     $args = array(
         'posts_per_page'   => -1,

@@ -331,6 +331,22 @@ function pi_get_portfolio_items($num = -1){
 				$cat_num = count($categories);
 				$cat = '';
 				$i = 1;
+				//resize image
+				$new_height = pi_resize_image(get_post_thumbnail_id($item->ID), $col_width);
+
+				//generate the image with the proper wp function for resize image
+				$image_sizes = get_intermediate_image_sizes();
+				if(!isset($image_sizes[$grid_class])){
+					add_image_size ($grid_class, $col_width, $new_height );
+				}
+
+				//when user changes the pi_col option then the resize function take place
+
+				//also when a new portfolio item generated then again the new size generated.
+
+				//name the image the same as the pi_col so that the size image generates automatically
+
+				//print categories
 				foreach ($categories as $key => $category){
 					$cat .= $category->cat_name;
 					$cat .= ( $i < $cat_num) ? ',' : '';
@@ -358,7 +374,16 @@ function pi_get_portfolio_items($num = -1){
 	return $html;
 }
 
+function pi_resize_image($img_id, $col_width){
 
+	$attachment = wp_get_attachment_image_src($img_id, 'full');
+	$width = $attachment[1];
+	$height = $attachment[2];
+
+	$new_height = ($col_width / $width ) * $height;
+	
+	return $new_height;
+}
 
 
 
