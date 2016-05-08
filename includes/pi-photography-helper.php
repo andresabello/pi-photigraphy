@@ -274,7 +274,7 @@ function pi_breadcrumbs() {
 function display_breadcrumbs() {?>
 	<div class="breadcrumbs"><?php pi_breadcrumbs(); ?></div><?php
 }
-add_action('ac_hook_after_header','display_breadcrumbs');
+add_action('pi_hook_after_header','display_breadcrumbs');
 
 function pi_get_portfolio_items($num = -1){
 	/*Get all pi_slider posts*/
@@ -288,16 +288,15 @@ function pi_get_portfolio_items($num = -1){
 	);
 	/*Portfolio Query*/
 	$items = get_posts( $args );
-	$grid_class = 'col-4';
-
+	$grid_class = get_option('pi_portfolio_settings')['pi_col'];
 	switch ($grid_class){
-		case 'col-3':
+		case '3':
 			$col_width = '262.5px';
 			break;
-		case 'col-4':
+		case '4':
 			$col_width = '360px';
 			break;
-		case 'col-6':
+		case '2':
 			$col_width = '555px';
 			break;
 	}
@@ -333,11 +332,10 @@ function pi_get_portfolio_items($num = -1){
 				$i = 1;
 				//resize image
 				$new_height = pi_resize_image(get_post_thumbnail_id($item->ID), $col_width);
-
 				//generate the image with the proper wp function for resize image
 				$image_sizes = get_intermediate_image_sizes();
-				if(!isset($image_sizes[$grid_class])){
-					add_image_size ($grid_class, $col_width, $new_height );
+				if(!isset($image_sizes['col-' . $grid_class])){
+					add_image_size ('col-' . $grid_class, $col_width, $new_height );
 				}
 
 				//when user changes the pi_col option then the resize function take place
@@ -353,8 +351,8 @@ function pi_get_portfolio_items($num = -1){
 					$i++;
 				}
 				?>
-				<div class="portfolio-item <?php echo $grid_class; ?>" data-groups="<?php echo $cat; ?>">
-					<?php echo get_the_post_thumbnail ($item->ID, 'large', array('class' => 'img-responsive')); ?>
+				<div class="portfolio-item col-<?php echo ($grid_class == '2' ? '6' : $grid_class); ?>" data-groups="<?php echo $cat; ?>">
+					<?php echo get_the_post_thumbnail ($item->ID, 'col-' . $grid_class, array('class' => 'img-responsive')); ?>
 					<figure class="portfolio-item__details" style="width: <?php echo $col_width; ?>;">
 						<figcaption class="portfolio-item__title"><a href="<?php echo esc_url(get_permalink($item->ID))?>"><?php echo $item->post_title; ?></a></figcaption>
 						<p class="portfolio-item__tags"><?php echo $cat; ?></p>
