@@ -26,18 +26,19 @@ jQuery(document).ready(function($){
             success: function( response, textStatus, XMLHttpRequest ) {
                 if( response.data === 'done' ){
                     alert(response.data);
+                    location.reload();
                 }else{
-                    createListings( response.data, total );
-                    $( '#current-file' ).val( response.data );
+                    createListings(response.data, total);
+                    $('#current-file').val(response.data);
 
-                    percent = ( response.data / total ) * 10;
+                    percent = (response.data / total) * 100;
                     $( '#print-current' ).text( percent.toFixed(2) + '%' );
                     $( '#progress-bar' ).find('.percent').animate({
                         "width": percent.toFixed(2) + "%",
                         "padding": "0 2px"
                     }, 300 );
                     $( '#progress-bar' ).find('.percent').text( parseInt(percent) + "%");
-
+                    $('#status-number').text(response.data);
                     // console.log( percent.toFixed(2) + '%' );
                 }
                 console.log(response.data);

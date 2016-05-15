@@ -265,7 +265,6 @@ img {
 .img-responsive {
     display: block;
     max-width: 100%;
-    height: auto;
 }
 .img-rounded {
     border-radius: 3px;
@@ -591,6 +590,37 @@ hr {
     float: left;
     margin-right: 20px;
 }
+/*Portfolio Styles*/
+.portfolio-item {
+    margin-top: 24px;
+    position: relative;
+}
+/*.portfolio-item .img-responsive{*/
+    /*height: 250px;*/
+/*}*/
+.portfolio-item .portfolio-item__details{
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(0,0,0,.87);
+    color: #fff;
+    width: 100%;
+    font-size: 1rem;
+    display: none;
+}
+
+.portfolio-item .portfolio-item__details .portfolio-item__tags, .portfolio-item .portfolio-item__details .portfolio-item__title{
+    margin: 0;
+    padding: 5px 5px 0 5px;
+    line-height: .75rem;
+}
+.portfolio-item .portfolio-item__details .portfolio-item__tags{
+    font-size: .75rem;
+    padding-bottom: 5px;
+}
+.portfolio-item .portfolio-item__details .portfolio-item__title{
+    padding-top: 10px;
+}
+/*Blog Styles*/
 .pi-blog{
     margin: 40px 0;
 }

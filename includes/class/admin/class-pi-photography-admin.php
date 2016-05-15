@@ -48,8 +48,6 @@ class Pi_Photography_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-        $currentScreen = get_current_screen();
-
         wp_enqueue_style( 'wp-color-picker' );
         wp_register_style( 'font-awesome', STYLES . '/font-awesome.min.css', false, '4.4.0' );
         wp_register_style( 'pi-admin-css', STYLES . '/admin/css/admin-styles.css', array( 'font-awesome') );
@@ -84,10 +82,21 @@ class Pi_Photography_Admin {
 		wp_localize_script( 'pi-script', 'pi_import_ajax', $data );
         
         if( $currentScreen->id === "pi_slider" ) {
-            wp_enqueue_script( 'pi-plupload', SCRIPTS . '/pi-plupload.js', array( 'jquery','wp-ajax-response', 'plupload-all' ), '1.0.0', true );
+            wp_enqueue_script( 'pi-plupload', SCRIPTS . '/pi-plupload.js', array(
+				'jquery',
+				'wp-ajax-response',
+				'plu
+				pload-all'), '1.0.0', true
+			);
             /** localize script to handle ajax using wordpress and not an outside source. piajax is your ajax varible **/
-            wp_localize_script( 'pi-plupload', 'piajax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ), 'imgs' => IMAGES ));
-            wp_localize_script( 'pi-plupload', 'piFile', array( 'maxFileUploadsSingle' => __( 'You may only upload maximum %d file', $this->theme_name ), 'maxFileUploadsPlural' => __( 'You may only upload maximum %d files', $this->theme_name ),));
+            wp_localize_script( 'pi-plupload', 'piajax', array(
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'imgs' => IMAGES )
+			);
+            wp_localize_script( 'pi-plupload', 'piFile', array(
+				'maxFileUploadsSingle' => __( 'You may only upload maximum %d file', $this->theme_name ),
+				'maxFileUploadsPlural' => __( 'You may only upload maximum %d files', $this->theme_name ),)
+			);
         }
 
 	}
@@ -101,8 +110,9 @@ class Pi_Photography_Admin {
 
 		$files = 20;
 		if( $current_file >= $files ){
-			$this->pi_create_slider();
+			$this->pi_create_slider($current_file);
 			$this->add_theme_options();
+			$this->add_demo_pages();
 			wp_send_json_success( 'done' );
 		}else{
 			//Create the posts...Here we should fetch the stored api and then request the
@@ -116,6 +126,7 @@ class Pi_Photography_Admin {
 	 */
 	public function pi_create_item($value) {
 		$title = $this->get_image_name($value);
+        $title = str_replace('.jpg', '', $title);
 		$faker = $this->generate_faker();
 		$pi_post = array(
 			'post_title'    => wp_strip_all_tags( $title ),
@@ -124,9 +135,11 @@ class Pi_Photography_Admin {
 			'post_author'   => get_current_user_id(),
 			'post_type'     => 'pi_portfolio',
 		);
+
 		// Insert the post into the database
 		$post_id = wp_insert_post( $pi_post );
 		if( $post_id ){
+            $this->pi_create_categories($post_id, $title);
 			update_post_meta( $post_id, 'name', 'Sample Name' );
 			update_post_meta( $post_id, 'url', 'http://piboutique.com' );
 			$image_url = $this->get_image_from_demo($value);
@@ -134,6 +147,66 @@ class Pi_Photography_Admin {
 		}
 
 		return $value + 1;
+	}
+	public function pi_create_categories($post_id, $name){
+		$categories = array('animals', 'city', 'outdoors', 'people', 'sea', 'sky', 'soccer');
+        $taxonomy = 'pi_portfolio';
+        switch ($name){
+            case 'cabin':
+                wp_set_post_terms( $post_id, array('outdoors'), $taxonomy);
+                break;
+            case 'wave':
+                wp_set_post_terms( $post_id, array('sea'), $taxonomy);
+                break;
+            case 'tiger':
+                wp_set_post_terms( $post_id, array('animals'), $taxonomy);
+                break;
+            case 'stars':
+                wp_set_post_terms( $post_id, array('sky'), $taxonomy);
+                break;
+            case 'soccer-stadium':
+                wp_set_post_terms( $post_id, array('soccer'), $taxonomy);
+                break;
+            case 'person':
+                wp_set_post_terms( $post_id, array('people'), $taxonomy);
+                break;
+            case 'paris':
+                wp_set_post_terms( $post_id, array('city'), $taxonomy);
+                break;
+            case 'outdoor-work':
+                wp_set_post_terms( $post_id, array('outdoors', 'people'), $taxonomy);
+                break;
+            case 'mountains':
+                wp_set_post_terms( $post_id, array('outdoors'), $taxonomy);
+                break;
+            case 'miami':
+                wp_set_post_terms( $post_id, array('city'), $taxonomy);
+                break;
+            case 'man':
+                wp_set_post_terms( $post_id, array('people'), $taxonomy);
+                break;
+            case 'leaves':
+                wp_set_post_terms( $post_id, array('outdoors'), $taxonomy);
+                break;
+            case 'kiss':
+                wp_set_post_terms( $post_id, array('people'), $taxonomy);
+                break;
+            case 'forest':
+                wp_set_post_terms( $post_id, array('outdoors'), $taxonomy);
+                break;
+            case 'family':
+                wp_set_post_terms( $post_id, array('people'), $taxonomy);
+                break;
+            case 'dog':
+                wp_set_post_terms( $post_id, array('animals'), $taxonomy);
+                break;
+            case 'city':
+                wp_set_post_terms( $post_id, array('city', 'outdoors'), $taxonomy);
+                break;
+            case 'castle':
+                wp_set_post_terms( $post_id, array('outdoors'), $taxonomy);
+                break;
+        }
 	}
 	/**
 	 *Creates Portfolio Item
@@ -167,8 +240,8 @@ class Pi_Photography_Admin {
 		}
 	}
 	public function add_theme_options() {
-		$pi_options = get_option('pi_general_settings');
-
+		$pi_options = array();
+		$option_name = 'pi_general_settings' ;
 		$img_url = $this->get_image_logo_from_demo();
 		//Logo
 		$pi_options['pi_logo'] = $img_url;
@@ -177,9 +250,58 @@ class Pi_Photography_Admin {
 		$pi_options['pi_main_color_picker'] = '#fdfdfd';
 		$pi_options['pi_second_color_picker'] = '#dc724d';
 		$pi_options['sidebar_general_position'] = 'right';
-		$pi_options['pi_font_family'] = 'Lato';
-		update_option('pi_general_settings', $pi_options);
 
+		if ( get_option( $option_name ) !== false ) {
+			// The option already exists, so we just update it.
+			update_option( $option_name, $pi_options );
+
+		} else {
+			// The option hasn't been added yet. We'll add it with $autoload set to 'no'.
+			$deprecated = null;
+			$autoload = 'no';
+			add_option( $option_name, $pi_options, $deprecated, $autoload );
+		}
+
+	}
+	public function add_demo_pages(){
+		$pages = array('home', 'about', 'blog', 'portfolio', 'contact');
+		$faker = $this->generate_faker();
+		foreach ($pages as $page){
+			$data = array(
+				'post_title'    => ucwords( $page ),
+				'post_content'  => $faker['content'],
+				'post_status'   => 'publish',
+				'post_author'   => get_current_user_id(),
+				'post_type'		=> 'page'
+			);
+			$post_id = wp_insert_post( $data );
+
+			if( $post_id ){
+				$this->pi_add_page_meta($post_id, $page);
+			}
+		}
+	}
+	public function pi_add_page_meta($post_id, $page){
+		if($page === 'portfolio'){
+			update_post_meta( $post_id, '_wp_page_template', 'page-portfolio.php');
+			update_post_meta( $post_id, 'page_template', 'page-portfolio.php');
+		}
+		if($page === 'contact'){
+			update_post_meta( $post_id, '_wp_page_template', 'page-contact.php');
+			update_post_meta( $post_id, 'page_template', 'page-contact.php');
+		}
+		if($page === 'home'){
+			update_option( 'show_on_front', 'page' );
+			update_option( 'page_on_front', $post_id );
+		}
+		if ($page === 'blog'){
+			$images = $this->get_images(1);
+			foreach ($images as $key => $image){
+				$new = $key;
+			}
+			set_post_thumbnail($post_id, $new);
+			update_option( 'page_for_posts', $post_id );
+		}
 	}
 	public function generate_faker(){
 		$faker = array();

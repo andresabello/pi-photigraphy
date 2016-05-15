@@ -67,5 +67,13 @@ class Pi_Photography_Public{
 		wp_enqueue_script( $this->theme_name, SCRIPTS . '/pi-script.js', array('jquery', 'slick-slider', 'jquery-effects-core'), $this->version, true );
 		wp_enqueue_script( 'pi-image', SCRIPTS .'/image.js', array( 'jquery-ui-sortable' ), $this->version, true );
 
+		global $post;
+		if($post->post_name === 'portfolio'){
+			wp_enqueue_script( 'modernizr', SCRIPTS . '/modernizr.min.js', array('jquery'), '2.6.2
+			' );
+			wp_enqueue_script( 'shuffle', SCRIPTS . '/shufflejs.min.js', array('modernizr'), '3.1.1' );
+			wp_enqueue_script( 'throttle', SCRIPTS . '/throttle.min.js', array('jquery'), '3.1.1' );
+			wp_enqueue_script( 'pi_shuffle', SCRIPTS . '/pi-shuffle.js', array('shuffle', 'throttle'), $this->version );
+		}
 	}
 }

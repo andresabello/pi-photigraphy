@@ -43,6 +43,7 @@ class Pi_Photography_Extras {
 	 *
 	 * @param array $atts has shortcode attributes
 	 */
+	//TODO MOdernize this.
 	public function pi_slider_shortcode( $atts ) {
 	    /*Handle shortode attributes*/
 	    $a = shortcode_atts( array(

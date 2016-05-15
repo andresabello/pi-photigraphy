@@ -184,7 +184,6 @@ function pi_add_http( $url ) {
 	        $url = "http://" . $url;
 	    }		
 	}
-
     return $url;
 }
 
@@ -249,7 +248,7 @@ function pi_format_phone($phone){
 
 
 // Breadcrumbs for website
-function ac_breadcrumbs() {
+function pi_breadcrumbs() {
 	echo '<a href="';
 	echo get_option('home');
 	echo '">';
@@ -273,11 +272,116 @@ function ac_breadcrumbs() {
         }
 }
 function display_breadcrumbs() {?>
-	<div class="breadcrumbs"><?php ac_breadcrumbs(); ?></div><?php
+	<div class="breadcrumbs"><?php pi_breadcrumbs(); ?></div><?php
 }
-add_action('ac_hook_after_header','display_breadcrumbs');
+add_action('pi_hook_after_header','display_breadcrumbs');
 
+function pi_get_portfolio_items($num = -1){
+	/*Get all pi_slider posts*/
+	$args = array(
+		'posts_per_page'   => $num,
+		'offset'           => 0,
+		'orderby'          => 'post_date',
+		'order'            => 'DESC',
+		'post_type'        => 'pi_portfolio',
+		'post_status'      => 'publish'
+	);
+	/*Portfolio Query*/
+	$items = get_posts( $args );
+	$grid_class = get_option('pi_portfolio_settings')['pi_col'];
+	switch ($grid_class){
+		case '3':
+			$col_width = '262.5px';
+			break;
+		case '4':
+			$col_width = '360px';
+			break;
+		case '2':
+			$col_width = '555px';
+			break;
+	}
 
+	$cat_args = array(
+		'taxonomy' => 'category',
+		'orderby'  => 'name',
+		'order'    => 'DESC',
+		'exclude'  => 1
+	);
+	$all_cats = get_categories($cat_args);
+	ob_start();
+	?>
+	<div class="pi-portfolio-wrapper row">
+		<div class="row">
+			<div class="col-8">
+				<select name="categories" class="portfolio-sorting list-inline text-center">
+					<option data-group="all" class="active">All</option>
+					<?php
+					foreach ($all_cats as $cat){
+						echo '<option data-group="'. $cat->cat_name .'">' . ucwords($cat->cat_name) . '</option>';
+					}
+					?>
+				</select>
+			</div>
+		</div>
+		<div class="portfolio-items list-unstyled" id="grid">
+			<?php
+			foreach($items as $item) {
+				$categories = get_the_category($item->ID);
+				$cat_num = count($categories);
+				$cat = '';
+				$i = 1;
+				//resize image
+				$new_height = pi_resize_image(get_post_thumbnail_id($item->ID), $col_width);
+				//generate the image with the proper wp function for resize image
+				$image_sizes = get_intermediate_image_sizes();
+				if(!isset($image_sizes['col-' . $grid_class])){
+					add_image_size ('col-' . $grid_class, $col_width, $new_height );
+				}
+
+				//when user changes the pi_col option then the resize function take place
+
+				//also when a new portfolio item generated then again the new size generated.
+
+				//name the image the same as the pi_col so that the size image generates automatically
+
+				//print categories
+				foreach ($categories as $key => $category){
+					$cat .= $category->cat_name;
+					$cat .= ( $i < $cat_num) ? ',' : '';
+					$i++;
+				}
+				?>
+				<div class="portfolio-item col-<?php echo ($grid_class == '2' ? '6' : $grid_class); ?>" data-groups="<?php echo $cat; ?>">
+					<?php echo get_the_post_thumbnail ($item->ID, 'col-' . $grid_class, array('class' => 'img-responsive')); ?>
+					<figure class="portfolio-item__details" style="width: <?php echo $col_width; ?>;">
+						<figcaption class="portfolio-item__title"><a href="<?php echo esc_url(get_permalink($item->ID))?>"><?php echo $item->post_title; ?></a></figcaption>
+						<p class="portfolio-item__tags"><?php echo $cat; ?></p>
+					</figure>
+				</div>
+				<?php
+
+			}
+			?>
+		</div>
+	</div>
+	<?php
+	$html = ob_get_contents();
+	ob_end_clean();
+	/* Restore original Post Data */
+	wp_reset_postdata();
+	return $html;
+}
+
+function pi_resize_image($img_id, $col_width){
+
+	$attachment = wp_get_attachment_image_src($img_id, 'full');
+	$width = $attachment[1];
+	$height = $attachment[2];
+
+	$new_height = ($col_width / $width ) * $height;
+	
+	return $new_height;
+}
 
 
 

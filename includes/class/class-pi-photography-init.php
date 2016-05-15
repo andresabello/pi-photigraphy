@@ -175,16 +175,10 @@ class Pi_Photography {
 		$cpt_portfolios = new Pi_Custom_Post_Type( $portfolio, $por_options, $this->get_theme_name());
 		$cpt_portfolios->run();
 		$cpt_portfolios->register_taxonomy(array(
-		    'taxonomy_name' => 'category',
+		    'taxonomy_name' => 'portfolio_cat',
 		    'singular' => 'Category',
 		    'plural' => 'Categories',
-		    'slug' => 'category'
-		));
-		$cpt_portfolios->register_taxonomy(array(
-			'taxonomy_name' => 'tag',
-			'singular' => 'Tag',
-			'plural' => 'Tags',
-			'slug' => 'tag'
+		    'slug' => 'portfolio_cat'
 		));
 		$extras = new Pi_Photography_Extras( $this->get_theme_name(), $this->get_version() );
 		

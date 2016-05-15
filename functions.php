@@ -88,45 +88,75 @@ function pi_add_columns( $atts, $content = null ) {
     return $html;
 }
 
-add_action('admin_init', 'print_slider', 20);
+//add_action('admin_init', 'print_slider', 20);
+//
+//function print_slider(){
+////    $args = array(
+////        'posts_per_page'   => -1,
+////        'post_type'        => 'pi_slider',
+////        'post_status'      => 'publish',
+////        'suppress_filters' => true
+////    );
+////    $posts_array = get_posts( $args );
+////    foreach ($posts_array as $key => $value){
+////        echo '<div class="container">';
+////        var_dump(get_post_meta($value->ID, 'pi_plupload'));
+////        echo '</div>';
+////    }
+////
+////    $query_images_args = array(
+////        'post_type'      => 'attachment',
+////        'post_mime_type' => 'image',
+////        'post_status'    => 'inherit',
+////        'posts_per_page' => 5,
+////    );
+////
+////    $query_images = new WP_Query( $query_images_args );
+////
+////    $images = array();
+////    foreach ( $query_images->posts as $image ) {
+////        $images[$image->ID] = wp_get_attachment_url( $image->ID );
+////    }
+////
+////
+////    var_dump($images);
+////
+////    $pi_options = get_option('pi_general_settings');
+////    $dir = get_theme_root() . '/PiPhotography/assets/demo/img/';
+////    $images = glob($dir . "logo.png");
+////    $img_index = $images[0];
+////    $img_url = PIMAIN . '/' . substr($img_index, strpos($img_index, "assets"));
+////    $pi_options['pi_logo'] = $img_url;
+////    update_option('pi_general_settings', $pi_options);
+//    global $wp_query;
+//    var_dump($wp_query);
+//
+//}
 
-function print_slider(){
+//add_action('admin_init', 'add_category');
+function add_category(){
+    $args = array(
+        'posts_per_page'   => -1,
+        'post_status'      => 'publish',
+        'post_type'        => 'pi_portfolio',
+        'suppress_filters' => true
+    );
+    $posts_array = get_posts( $args );
+    foreach ($posts_array as $post){
+        $is = wp_set_post_terms( $post->ID, array('outdoors'), 'portfolio_cat');
+        var_dump($is);
+    }
 //    $args = array(
-//        'posts_per_page'   => -1,
-//        'post_type'        => 'pi_slider',
-//        'post_status'      => 'publish',
-//        'suppress_filters' => true
+//        'public'   => true,
+//        '_builtin' => false,
+//        'name'     => 'portfolio_cat'
 //    );
-//    $posts_array = get_posts( $args );
-//    foreach ($posts_array as $key => $value){
-//        echo '<div class="container">';
-//        var_dump(get_post_meta($value->ID, 'pi_plupload'));
-//        echo '</div>';
+//    $output = 'names'; // or objects
+//    $operator = 'and'; // 'and' or 'or'
+//    $taxonomies = get_taxonomies( $args, $output, $operator );
+//    if ( $taxonomies ) {
+//        foreach ( $taxonomies  as $taxonomy ) {
+//            echo '<p>' . $taxonomy . '</p>';
+//        }
 //    }
-//
-//    $query_images_args = array(
-//        'post_type'      => 'attachment',
-//        'post_mime_type' => 'image',
-//        'post_status'    => 'inherit',
-//        'posts_per_page' => 5,
-//    );
-//
-//    $query_images = new WP_Query( $query_images_args );
-//
-//    $images = array();
-//    foreach ( $query_images->posts as $image ) {
-//        $images[$image->ID] = wp_get_attachment_url( $image->ID );
-//    }
-//
-//
-//    var_dump($images);
-
-//    $pi_options = get_option('pi_general_settings');
-//    $dir = get_theme_root() . '/PiPhotography/assets/demo/img/';
-//    $images = glob($dir . "logo.png");
-//    $img_index = $images[0];
-//    $img_url = PIMAIN . '/' . substr($img_index, strpos($img_index, "assets"));
-//    $pi_options['pi_logo'] = $img_url;
-//    update_option('pi_general_settings', $pi_options);
-
 }
