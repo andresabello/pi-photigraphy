@@ -25,6 +25,7 @@ jQuery(document).ready(function($){
 
     //Hover Title and Tags
     $( ".portfolio-item" ).hover( function() {
+        $(this).find(".portfolio-item__details").width($(this).data('width'));
         $(this).find(".portfolio-item__details").stop().slideToggle('slow');
     });
 

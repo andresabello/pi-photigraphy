@@ -299,6 +299,8 @@ function pi_get_portfolio_items($num = -1){
 		case '2':
 			$col_width = '555px';
 			break;
+		default :
+			$col_width = '1140px';
 	}
 
 	$cat_args = array(
@@ -350,10 +352,13 @@ function pi_get_portfolio_items($num = -1){
 					$cat .= ( $i < $cat_num) ? ',' : '';
 					$i++;
 				}
+
+				$img_id = get_post_thumbnail_id( $item->ID );
+				$img = wp_get_attachment_image_src($img_id, 'col-' . $grid_class);
 				?>
-				<div class="portfolio-item col-<?php echo ($grid_class == '2' ? '6' : $grid_class); ?>" data-groups="<?php echo $cat; ?>">
-					<?php echo get_the_post_thumbnail ($item->ID, 'col-' . $grid_class, array('class' => 'img-responsive')); ?>
-					<figure class="portfolio-item__details" style="width: <?php echo $col_width; ?>;">
+				<div class="portfolio-item col-<?php echo ($grid_class == '2') ? '6' : ($grid_class == null ? '12' : $grid_class); ?>" data-groups="<?php echo $cat; ?>">
+					<img src="<?php echo $img[0]; ?>" alt="<?php echo $item->post_title; ?>" width="<?php echo $img[1]; ?>" height="<?php  echo $img[2]; ?>" class="img-responsive">
+					<figure class="portfolio-item__details" style="width: <?php echo $img[1]; ?>px; ">
 						<figcaption class="portfolio-item__title"><a href="<?php echo esc_url(get_permalink($item->ID))?>"><?php echo $item->post_title; ?></a></figcaption>
 						<p class="portfolio-item__tags"><?php echo $cat; ?></p>
 					</figure>
