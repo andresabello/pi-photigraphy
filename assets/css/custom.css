@@ -579,14 +579,17 @@ hr {
     font-weight: bold;
     text-decoration: none;
 }
-#pi-navigation{
-    list-style: none;
-    padding: 0;
-    margin: 20px 0 0 0;
+#pi-navigation {
+    margin: 0;
     float: right;
-    display: block;
+    display: inline-block;
 }
-#pi-navigation li{
+#pi-navigation ul{
+    list-style: none;
+    padding: 20px 0;
+    margin: 0;
+}
+#pi-navigation ul li{
     float: left;
     margin-right: 20px;
 }

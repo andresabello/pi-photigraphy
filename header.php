@@ -1,3 +1,8 @@
+<?php
+//Template Variables
+$general_settings = get_option('pi_general_settings');
+$logo = $general_settings['pi_logo'];
+?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -18,8 +23,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-4">
-                        <a  class="logo" href="<?= home_url(); ?>">
-                            Pi Photography
+                        <a  class="logo" href="<?php echo home_url(); ?>">
+                            <img src="<?php echo $logo; ?>" alt="<?php echo get_option('blogname'); ?>">
                         </a>                    
                     </div>
                     <div class="col-8">
@@ -39,7 +44,7 @@
                         );
 
                         wp_nav_menu( $defaults );
-                        ?>                   
+                    ?>
                     </div>
                 </div>
             </div>
