@@ -266,18 +266,24 @@ class Pi_Photography_Admin {
 	public function add_demo_pages(){
 		$pages = array('home', 'about', 'blog', 'portfolio', 'contact');
 		$faker = $this->generate_faker();
-		foreach ($pages as $page){
-			$data = array(
-				'post_title'    => ucwords( $page ),
-				'post_content'  => $faker['content'],
-				'post_status'   => 'publish',
-				'post_author'   => get_current_user_id(),
-				'post_type'		=> 'page'
-			);
-			$post_id = wp_insert_post( $data );
+		$menu_name = 'primary-menu';
+		$menu_exists = wp_get_nav_menu_object( $menu_name );
+		if(!$menu_exists){
+			$menu_id = wp_create_nav_menu('primary-menu');
+			
+			foreach ($pages as $page){
+				$data = array(
+					'post_title'    => ucwords( $page ),
+					'post_content'  => $faker['content'],
+					'post_status'   => 'publish',
+					'post_author'   => get_current_user_id(),
+					'post_type'		=> 'page'
+				);
+				$post_id = wp_insert_post( $data );
 
-			if( $post_id ){
-				$this->pi_add_page_meta($post_id, $page);
+				if( $post_id ){
+					$this->pi_add_page_meta($post_id, $page);
+				}
 			}
 		}
 	}

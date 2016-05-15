@@ -310,9 +310,9 @@ function pi_get_portfolio_items($num = -1){
 	$all_cats = get_categories($cat_args);
 	ob_start();
 	?>
-	<div class="pi-portfolio-wrapper row">
+	<div class="pi-portfolio-wrapper">
 		<div class="row">
-			<div class="col-8">
+			<div class="col-2">
 				<select name="categories" class="portfolio-sorting list-inline text-center">
 					<option data-group="all" class="active">All</option>
 					<?php
@@ -323,7 +323,7 @@ function pi_get_portfolio_items($num = -1){
 				</select>
 			</div>
 		</div>
-		<div class="portfolio-items list-unstyled" id="grid">
+		<div class="portfolio-items list-unstyled row" id="grid">
 			<?php
 			foreach($items as $item) {
 				$categories = get_the_category($item->ID);
