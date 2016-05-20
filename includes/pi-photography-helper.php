@@ -304,12 +304,11 @@ function pi_get_portfolio_items($num = -1){
 	}
 
 	$cat_args = array(
-		'taxonomy' => 'category',
-		'orderby'  => 'name',
-		'order'    => 'DESC',
-		'exclude'  => 1
+		'portfolio_cat'
 	);
-	$all_cats = get_categories($cat_args);
+	$all_cats = get_terms($cat_args);
+
+    var_dump($all_cats);
 	ob_start();
 	?>
 	<div class="pi-portfolio-wrapper">

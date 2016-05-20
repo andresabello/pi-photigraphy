@@ -139,7 +139,7 @@ class Pi_Photography_Admin {
 		// Insert the post into the database
 		$post_id = wp_insert_post( $pi_post );
 		if( $post_id ){
-            $this->pi_create_categories($post_id, $title);
+            $this->pi_create_categories($post_id, wp_strip_all_tags($title));
 			update_post_meta( $post_id, 'name', 'Sample Name' );
 			update_post_meta( $post_id, 'url', 'http://piboutique.com' );
 			$image_url = $this->get_image_from_demo($value);
@@ -150,7 +150,7 @@ class Pi_Photography_Admin {
 	}
 	public function pi_create_categories($post_id, $name){
 		$categories = array('animals', 'city', 'outdoors', 'people', 'sea', 'sky', 'soccer');
-        $taxonomy = 'pi_portfolio';
+        $taxonomy = 'portfolio_cat';
         switch ($name){
             case 'cabin':
                 wp_set_post_terms( $post_id, array('outdoors'), $taxonomy);
