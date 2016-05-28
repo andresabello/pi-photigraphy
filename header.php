@@ -22,29 +22,34 @@ $logo = $general_settings['pi_logo'];
         <header class="clearfix" id="main-header">
             <div class="container">
                 <div class="row">
+                    <div class="col-12 toggle-wrap">
+                        <button class="toggle-menu">
+                            <span class="hamburger-middle"></span>
+                        </button> Menu
+                    </div>
                     <div class="col-4">
                         <a  class="logo" href="<?php echo home_url(); ?>">
-                            <img src="<?php echo $logo; ?>" alt="<?php echo get_option('blogname'); ?>">
+                            <img src="<?php echo $logo; ?>" alt="<?php echo get_option('blogname'); ?>" class="img-responsive">
                         </a>                    
                     </div>
                     <div class="col-8">
-                    <?php
-                        $defaults = array(
-                            'menu'            => 'primary',
-                            'theme_location'  => 'primary',
-                            'container'       => 'div',
-                            'container_class' => 'pi-wrap',
-                            'container_id'    => 'pi-nav-wrap',
-                            'menu_class'      => 'pi-menu',
-                            'menu_id'         => 'pi-navigation',
-                            'echo'            => true,
-                            'fallback_cb'     => 'wp_page_menu',
-                            'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-                            'depth'           => 2,
-                        );
+                        <?php
+                            $defaults = array(
+                                'menu'            => 'primary-menu',
+                                'theme_location'  => 'primary-menu',
+                                'container'       => 'div',
+                                'container_class' => 'pi-wrap',
+                                'container_id'    => 'pi-nav-wrap',
+                                'menu_class'      => 'pi-menu',
+                                'menu_id'         => 'pi-navigation',
+                                'echo'            => true,
+                                'fallback_cb'     => 'wp_page_menu',
+                                'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+                                'depth'           => 2,
+                            );
 
-                        wp_nav_menu( $defaults );
-                    ?>
+                            wp_nav_menu( $defaults );
+                        ?>
                     </div>
                 </div>
             </div>

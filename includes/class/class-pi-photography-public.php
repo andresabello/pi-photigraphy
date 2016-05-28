@@ -53,6 +53,42 @@ class Pi_Photography_Public{
 		wp_enqueue_style( $this->theme_name, STYLES . '/custom.css', array( 'font-awesome', 'pi-normalize' ) );
 		wp_enqueue_style( 'slick', STYLES . '/slick.css', false, '1.4.1' );
 		wp_enqueue_style( 'pi-theme', STYLES . '/pi-theme.css', false, $this->version );
+
+		$general_options = get_option('pi_general_settings');
+		$footer_options = get_option('pi_footer_settings');
+
+		$font_color = $general_options['pi_font_color'];
+		$main_color = $general_options['pi_main_color_picker'];
+		$accent_color = $general_options['pi_second_color_picker'];
+        $footer_bg = $footer_options['footer_background'];
+        $footer_font = $footer_options['footer_color'];
+        $lower_footer_bg = $footer_options['lower_footer_background'];
+
+		$custom_css = "
+			body{
+				color: {$font_color};
+			}
+			a {
+			    color: {$accent_color};
+			}
+			#pi-navigation li a{
+    			color: {$main_color};
+    		}
+        	#pi-navigation li a:hover{
+    			color: {$accent_color};
+    		}
+    		.show-menu .toggle-menu:after {
+                background-color: {$accent_color};
+            }
+            .footer{
+                background-color: {$footer_bg};
+                color: {$footer_font};
+            }
+            .lower-footer{
+                background-color: {$lower_footer_bg};
+            }
+        ";
+		wp_add_inline_style( $this->theme_name, $custom_css );
 	}
 	/**
 	 * Register the stylesheets for the public-facing side of the site.

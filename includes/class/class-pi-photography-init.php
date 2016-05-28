@@ -108,7 +108,7 @@ class Pi_Photography {
 		//Security, Validation, Sanitization of data
 		require_once FRAMEWORK . '/class/class-pi-photography-security.php';
 		//Load Forms
-		require_once FRAMEWORK . '/class/class-pi-forms.php';
+		require_once FRAMEWORK . '/class/class-pi-theme-forms.php';
 		//Load theme extra functions
 		require_once FRAMEWORK . '/class/class-pi-photography-extras.php';
 		//Load theme options
@@ -176,9 +176,9 @@ class Pi_Photography {
 		$cpt_portfolios->run();
 		$cpt_portfolios->register_taxonomy(array(
 		    'taxonomy_name' => 'portfolio_cat',
-		    'singular' => 'Category',
-		    'plural' => 'Categories',
-		    'slug' => 'portfolio_cat'
+		    'singular' => 'Portfolio Category',
+		    'plural' => 'Portfolio Categories',
+		    'slug' => 'portfolio-cat'
 		));
 		$extras = new Pi_Photography_Extras( $this->get_theme_name(), $this->get_version() );
 		

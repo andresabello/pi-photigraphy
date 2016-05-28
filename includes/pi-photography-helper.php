@@ -300,16 +300,16 @@ function pi_get_portfolio_items($num = -1){
 			$col_width = '555px';
 			break;
 		default :
-			$col_width = '1140px';
+			$col_width = '1100px';
 	}
 
 	$cat_args = array(
-		'taxonomy' => 'category',
+		'taxonomy' => 'portfolio_cat',
 		'orderby'  => 'name',
 		'order'    => 'DESC',
 		'exclude'  => 1
 	);
-	$all_cats = get_categories($cat_args);
+	$all_cats = get_terms($cat_args);
 	ob_start();
 	?>
 	<div class="pi-portfolio-wrapper">
@@ -319,7 +319,7 @@ function pi_get_portfolio_items($num = -1){
 					<option data-group="all" class="active">All</option>
 					<?php
 					foreach ($all_cats as $cat){
-						echo '<option data-group="'. $cat->cat_name .'">' . ucwords($cat->cat_name) . '</option>';
+						echo '<option data-group="'. $cat->name .'">' . ucwords($cat->name) . '</option>';
 					}
 					?>
 				</select>
@@ -328,36 +328,36 @@ function pi_get_portfolio_items($num = -1){
 		<div class="portfolio-items list-unstyled row" id="grid">
 			<?php
 			foreach($items as $item) {
-				$categories = get_the_category($item->ID);
-				$cat_num = count($categories);
+				$terms = get_the_terms($item->ID, 'portfolio_cat');
+                //var_dump($terms);
+				$cat_num = count($terms);
 				$cat = '';
 				$i = 1;
 				//resize image
 				$new_height = pi_resize_image(get_post_thumbnail_id($item->ID), $col_width);
-				//generate the image with the proper wp function for resize image
+
+                //generate the image with the proper wp function for resize image
 				$image_sizes = get_intermediate_image_sizes();
 				if(!isset($image_sizes['col-' . $grid_class])){
 					add_image_size ('col-' . $grid_class, $col_width, $new_height );
 				}
 
-				//when user changes the pi_col option then the resize function take place
-
-				//also when a new portfolio item generated then again the new size generated.
-
-				//name the image the same as the pi_col so that the size image generates automatically
-
 				//print categories
-				foreach ($categories as $key => $category){
-					$cat .= $category->cat_name;
-					$cat .= ( $i < $cat_num) ? ',' : '';
-					$i++;
-				}
+                if($terms){
+                    foreach ($terms as $term){
+                        $cat .= $term->name;
+                        $cat .= ( $i < $cat_num) ? ', ' : '';
+                        $i++;
+                    }
+                }
 
 				$img_id = get_post_thumbnail_id( $item->ID );
 				$img = wp_get_attachment_image_src($img_id, 'col-' . $grid_class);
 				?>
 				<div class="portfolio-item col-<?php echo ($grid_class == '2') ? '6' : ($grid_class == null ? '12' : $grid_class); ?>" data-groups="<?php echo $cat; ?>">
-					<img src="<?php echo $img[0]; ?>" alt="<?php echo $item->post_title; ?>" width="<?php echo $img[1]; ?>" height="<?php  echo $img[2]; ?>" class="img-responsive">
+                    <a href="<?php echo get_permalink($item->ID); ?>">
+                        <img src="<?php echo $img[0]; ?>" alt="<?php echo $item->post_title; ?>" width="<?php echo $img[1]; ?>px" height="<?php  echo $img[2]; ?>px" class="img-responsive">
+                    </a>
 					<figure class="portfolio-item__details" style="width: <?php echo $img[1]; ?>px; ">
 						<figcaption class="portfolio-item__title"><a href="<?php echo esc_url(get_permalink($item->ID))?>"><?php echo $item->post_title; ?></a></figcaption>
 						<p class="portfolio-item__tags"><?php echo $cat; ?></p>

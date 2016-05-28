@@ -66,7 +66,8 @@ class Pi_Photography_Extras {
 	    $autoplay = get_post_meta($post[0]->ID, '_autoplay_option', true);
 	    $dots = get_post_meta($post[0]->ID, '_dots_option', true);
 	    $arrows = get_post_meta($post[0]->ID, '_arrow_option', true);
-	    // $infinite = get_post_meta($post[0]->ID, '_infinite', true);
+	    
+		// $infinite = get_post_meta($post[0]->ID, '_infinite', true);
 	    $slide_speed = get_post_meta($post[0]->ID, '_slide_speed', true);
 	    $height = get_post_meta( $post[0]->ID, '_height', true );
 	    $opacity = get_post_meta( $post[0]->ID, '_opacity', true );

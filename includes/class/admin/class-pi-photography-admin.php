@@ -150,64 +150,88 @@ class Pi_Photography_Admin {
 	}
 	public function pi_create_categories($post_id, $name){
 		$categories = array('animals', 'city', 'outdoors', 'people', 'sea', 'sky', 'soccer');
-        $taxonomy = 'pi_portfolio';
+        $taxonomy = 'portfolio_cat';
+        $terms = $this->pi_create_custom_terms($categories, $taxonomy);
+
         switch ($name){
             case 'cabin':
-                wp_set_post_terms( $post_id, array('outdoors'), $taxonomy);
+                wp_set_object_terms( $post_id, 'outdoors', $taxonomy);
                 break;
             case 'wave':
-                wp_set_post_terms( $post_id, array('sea'), $taxonomy);
+                wp_set_object_terms( $post_id, 'sea', $taxonomy);
                 break;
             case 'tiger':
-                wp_set_post_terms( $post_id, array('animals'), $taxonomy);
+                wp_set_object_terms( $post_id, 'animals', $taxonomy);
                 break;
             case 'stars':
-                wp_set_post_terms( $post_id, array('sky'), $taxonomy);
+                wp_set_object_terms( $post_id, 'sky', $taxonomy);
                 break;
             case 'soccer-stadium':
-                wp_set_post_terms( $post_id, array('soccer'), $taxonomy);
+                wp_set_object_terms( $post_id, 'soccer', $taxonomy);
                 break;
             case 'person':
-                wp_set_post_terms( $post_id, array('people'), $taxonomy);
+                wp_set_object_terms( $post_id, 'people', $taxonomy);
                 break;
             case 'paris':
-                wp_set_post_terms( $post_id, array('city'), $taxonomy);
+                wp_set_object_terms( $post_id, 'city', $taxonomy);
                 break;
             case 'outdoor-work':
-                wp_set_post_terms( $post_id, array('outdoors', 'people'), $taxonomy);
+                wp_set_object_terms( $post_id, array('outdoors', 'people'), $taxonomy);
                 break;
             case 'mountains':
-                wp_set_post_terms( $post_id, array('outdoors'), $taxonomy);
+                wp_set_object_terms( $post_id, 'outdoors', $taxonomy);
                 break;
             case 'miami':
-                wp_set_post_terms( $post_id, array('city'), $taxonomy);
+                wp_set_object_terms( $post_id, 'city', $taxonomy);
                 break;
             case 'man':
-                wp_set_post_terms( $post_id, array('people'), $taxonomy);
+                wp_set_object_terms( $post_id, 'people', $taxonomy);
                 break;
             case 'leaves':
-                wp_set_post_terms( $post_id, array('outdoors'), $taxonomy);
+                wp_set_object_terms( $post_id, 'outdoors', $taxonomy);
                 break;
             case 'kiss':
-                wp_set_post_terms( $post_id, array('people'), $taxonomy);
+                wp_set_object_terms( $post_id, 'people', $taxonomy);
                 break;
             case 'forest':
-                wp_set_post_terms( $post_id, array('outdoors'), $taxonomy);
+                wp_set_object_terms( $post_id, 'outdoors', $taxonomy);
                 break;
             case 'family':
-                wp_set_post_terms( $post_id, array('people'), $taxonomy);
+                wp_set_object_terms( $post_id, 'people', $taxonomy);
                 break;
             case 'dog':
-                wp_set_post_terms( $post_id, array('animals'), $taxonomy);
+                wp_set_object_terms( $post_id, 'animals', $taxonomy);
                 break;
             case 'city':
-                wp_set_post_terms( $post_id, array('city', 'outdoors'), $taxonomy);
+                wp_set_object_terms( $post_id, array('city', 'outdoors'), $taxonomy);
                 break;
             case 'castle':
-                wp_set_post_terms( $post_id, array('outdoors'), $taxonomy);
+                wp_set_object_terms( $post_id, 'outdoors', $taxonomy);
                 break;
         }
 	}
+    public function pi_create_custom_terms($terms, $taxonomy){
+
+        foreach ($terms as $term){
+            $slug = str_replace(' ', '-', $term);
+            $slug = strtolower($slug);
+
+            $created_term = wp_insert_term(
+                $term,
+                $taxonomy,
+                array(
+                    'slug' => $slug
+                )
+            );
+
+            if( is_wp_error($created_term)){
+                return false;
+            }
+
+            $ids[] = $created_term['term_id'];
+        }
+        return $ids;
+    }
 	/**
 	 *Creates Portfolio Item
 	 */
@@ -241,28 +265,31 @@ class Pi_Photography_Admin {
 	}
 	public function add_theme_options() {
 		$pi_options = array();
-		$option_name = 'pi_general_settings' ;
+		$general_settings = 'pi_general_settings' ;
+        $portfolio_settings = 'pi_portfolio_settings';
 		$img_url = $this->get_image_logo_from_demo();
-		//Logo
-		$pi_options['pi_logo'] = $img_url;
-		$pi_options['pi_font_color'] = '#262626';
-		$pi_options['pi_font_family'] = 'Lato';
-		$pi_options['pi_main_color_picker'] = '#fdfdfd';
-		$pi_options['pi_second_color_picker'] = '#dc724d';
-		$pi_options['sidebar_general_position'] = 'right';
 
-		if ( get_option( $option_name ) !== false ) {
-			// The option already exists, so we just update it.
-			update_option( $option_name, $pi_options );
-
-		} else {
-			// The option hasn't been added yet. We'll add it with $autoload set to 'no'.
-			$deprecated = null;
-			$autoload = 'no';
-			add_option( $option_name, $pi_options, $deprecated, $autoload );
+		if ( !get_option( $general_settings ) !== false ) {
+            //General Settings
+            $pi_options['pi_logo'] = $img_url;
+            $pi_options['pi_font_color'] = '#262626';
+            $pi_options['pi_font_family'] = 'Lato';
+            $pi_options['pi_main_color_picker'] = '#4c4c4c';
+            $pi_options['pi_second_color_picker'] = '#dc724d';
+            $pi_options['sidebar_general_position'] = 'right';
+            
+            add_option( $general_settings, $pi_options, null, 'no' );
 		}
 
-	}
+        if ( !get_option( $portfolio_settings ) !== false ) {
+            //Portfolio Settings
+            $pi_port_options['pi_col'] = '2';
+
+            add_option( $portfolio_settings, $pi_port_options, null, 'no' );
+        }
+
+
+    }
 	public function add_demo_pages(){
 		$pages = array('home', 'about', 'blog', 'portfolio', 'contact');
 		$faker = $this->generate_faker();
@@ -283,6 +310,11 @@ class Pi_Photography_Admin {
 
 				if( $post_id ){
 					$this->pi_add_page_meta($post_id, $page);
+                    wp_update_nav_menu_item($menu_id, 0, array(
+                        'menu-item-title' =>  ucwords( $page ),
+                        'menu-item-url' => get_the_permalink($post_id),
+                        'menu-item-status' => 'publish')
+                    );
 				}
 			}
 		}

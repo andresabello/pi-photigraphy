@@ -1,4 +1,9 @@
 jQuery(document).ready(function($){
+    //Responsive Navigation
+    $('.toggle-menu').on('click', function () {
+        $('body').toggleClass('show-menu');
+    });
+
     //Simple Hover Effect
     $( ".pi-single" ).hover( function() {      
         if ($( this ).hasClass("slick-active") ) {
@@ -48,5 +53,5 @@ jQuery(document).ready(function($){
             pauseOnHover: pauseHover,
             speed: sliderSpeed
         });
-    }); 
+    });
 });
