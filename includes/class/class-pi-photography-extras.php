@@ -3,7 +3,7 @@
  * All extra functions to support theme functionality
  *
  * @package    Pi_Framework
- * @subpackage Pi_Framework_Extras/includes
+ * @subpackage Pi_Framework_Extras
  * @author     Andres Abello <abellowins@gmail.com>
  */ 
 class Pi_Photography_Extras {
@@ -43,7 +43,7 @@ class Pi_Photography_Extras {
 	 *
 	 * @param array $atts has shortcode attributes
 	 */
-	//TODO MOdernize this.
+	//TODO Modernize this.
 	public function pi_slider_shortcode( $atts ) {
 	    /*Handle shortode attributes*/
 	    $a = shortcode_atts( array(

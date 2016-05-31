@@ -128,10 +128,10 @@ add_filter('comment_excerpt', 'pi_comment_display', '', 1);
 
 /**
 *
-* Turn HEX to RGB with 80% opacity
+* Turn HEX to RGB with opacity
 *
 **/
-function hextorgba($hex) {
+function hex_to_rgba($hex, $op) {
 	$hex = str_replace("#", "", $hex);
 
 	if(strlen($hex) == 3) {
@@ -146,10 +146,37 @@ function hextorgba($hex) {
 	
 	$rgb = array($r, $g, $b);
 	$rgba = implode(",", $rgb);
-	$rgba = 'rgba(' . $rgba . ', .8)';
+	$rgba = 'rgba(' . $rgba . ', '. $op .')';
 	return $rgba;
 }
 
+/**
+ *
+ * Lighten or darken color
+ *
+ **/
+function adjust_brightness($hex, $steps) {
+	// Steps should be between -255 and 255. Negative = darker, positive = lighter
+	$steps = max(-255, min(255, $steps));
+
+	// Normalize into a six character long hex string
+	$hex = str_replace('#', '', $hex);
+	if (strlen($hex) == 3) {
+		$hex = str_repeat(substr($hex,0,1), 2).str_repeat(substr($hex,1,1), 2).str_repeat(substr($hex,2,1), 2);
+	}
+
+	// Split into three parts: R, G and B
+	$color_parts = str_split($hex, 2);
+	$return = '#';
+
+	foreach ($color_parts as $color) {
+		$color   = hexdec($color); // Convert to decimal
+		$color   = max(0,min(255,$color + $steps)); // Adjust color
+		$return .= str_pad(dechex($color), 2, '0', STR_PAD_LEFT); // Make two char hex code
+	}
+
+	return $return;
+}
 /**
 *
 * Get Page Name
@@ -386,6 +413,45 @@ function pi_resize_image($img_id, $col_width){
 	$new_height = ($col_width / $width ) * $height;
 	
 	return $new_height;
+}
+
+function pi_get_social_icons($options){
+    $keys = array_keys($options);
+    foreach ($keys as $value){
+        if($options[$value] !== '' || !empty($options[$value])){
+            switch ($value){
+                case 'pi_facebook':
+                    $icon[$value] = '<a class="social-icon facebook" href="'. $options[$value] .'"><i class="fa fa-facebook-square" aria-hidden="true"></i><span class="pi-bg"></span></a>';
+                    break;
+                case 'pi_twitter':
+                    $icon[$value] = '<a class="social-icon twitter" href="'. $options[$value] .'"><i class="fa fa-twitter-square" aria-hidden="true"></i><span class="pi-bg"></span></a>';
+                    break;
+                case 'pi_linked':
+                    $icon[$value] = '<a class="social-icon linkedin" href="'. $options[$value] .'"><i class="fa fa-linkedin-square" aria-hidden="true"></i><span class="pi-bg"></span></a>';
+                    break;
+                case 'pi_google':
+                    $icon[$value] = '<a class="social-icon google-plus" href="'. $options[$value] .'"><i class="fa fa-google-plus-square" aria-hidden="true"></i><span class="pi-bg"></span></a>';
+                    break;
+                case 'pi_youtube':
+                    $icon[$value] = '<a class="social-icon youtube" href="'. $options[$value] .'"><i class="fa fa-youtube-square" aria-hidden="true"></i><span class="pi-bg"></span></a>';
+                    break;
+                case 'pi_pinterest':
+                    $icon[$value] = '<a class="social-icon pinterest" href="'. $options[$value] .'"><i class="fa fa-pinterest-square" aria-hidden="true"></i><span class="pi-bg"></span></a>';
+                    break;
+                case 'pi_instagram':
+                    if(isset($value) && !empty($value)){
+                        $icon[$value] = '<a class="social-icon instagram" href="'. $options[$value] .'"><i class="fa fa-instagram" aria-hidden="true"></i><span class="pi-bg"></span></a>';
+                    }
+                    break;
+                default:
+                    return false;
+            }
+        }
+    }
+    return $icon;
+}
+function pi_build_social($social_media){
+
 }
 
 

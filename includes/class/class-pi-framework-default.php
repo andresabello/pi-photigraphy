@@ -1,15 +1,14 @@
-<?php 
+<?php
 /**
- * Default functionality of the theme.
+ * Default functionality of the theme or plugin
  *
- * Defines the theme name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
+ * Defines the name, version, and sets up theme defaults, sidebars, widgets
  *
- * @package    Pi_Directory
- * @subpackage Pi_Directory/admin
+ * @package    Pi_Framework
+ * @subpackage Pi_Framework_Default
  * @author     Andres Abello <abellowins@gmail.com>
  */
-class Pi_Directory_Default {
+class Pi_Framework_Default {
 	/**
 	 * The ID of this Theme.
 	 *
@@ -119,4 +118,7 @@ class Pi_Directory_Default {
 	        'after_title'   => '</h3>'
 	    ));
 	}
+	public function pi_register_widgets(){
+        register_widget( 'Pi_Form_Widget' );
+    }
 }

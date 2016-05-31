@@ -96,7 +96,7 @@ class Pi_Photography {
 		//Internationalization functionality of the theme.
 		require_once FRAMEWORK . '/class/class-pi-photography-i18n.php';
 		//Admin Side and Front End Functionality
-		require_once FRAMEWORK . '/class/class-pi-photography-default.php';
+		require_once FRAMEWORK . '/class/class-pi-framework-default.php';
 		//Admin Side Functionality
 		require_once FRAMEWORK . '/class/admin/class-pi-photography-admin.php';
 		//Public Side Functionality
@@ -117,6 +117,8 @@ class Pi_Photography {
 		require_once FRAMEWORK . '/pi-photography-helper.php';		
 		//Load Lipsum Library
 		require_once FRAMEWORK . '/class/class-pi-photography-lipsum.php';
+        //Widget Object
+        require_once FRAMEWORK . '/class/widgets/class-pi-form-widget.php';
 		//Start Loader
 		$this->loader = new Pi_Photography_Loader();
 
@@ -167,7 +169,7 @@ class Pi_Photography {
 			'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt', 'custom-fields' )
 		);
 
-		$defaults = new Pi_Directory_Default( $this->get_theme_name(), $this->get_version() );
+		$defaults = new Pi_Framework_Default( $this->get_theme_name(), $this->get_version() );
 		//Start Custom post types
 		$cpt_sliders = new Pi_Custom_Post_Type( $sliders, $options, $this->get_theme_name());
 		$cpt_sliders->run();
@@ -187,6 +189,12 @@ class Pi_Photography {
 
 		//Add Slider Shortcode
 		add_shortcode( 'pi_slider', array( $extras, 'pi_slider_shortcode') );
+		
+		//Start Forms
+        new Pi_Theme_Forms($this->get_theme_name(), $this->get_version());
+
+        //Start Widgets
+        $this->loader->add_action( 'widgets_init', $defaults, 'pi_register_widgets' );
 	}
 	/**
 	 * Register all of the hooks related to the admin area functionality
@@ -200,6 +208,7 @@ class Pi_Photography {
 		$slider_meta = new Pi_Custom_Meta_Box( $this->get_theme_name(), $this->get_version(), 'pi_slider' );
 		$portfolio_meta = new Pi_Custom_Meta_Box( $this->get_theme_name(), $this->get_version(), 'pi_portfolio' );
 		$theme_options = new Pi_Photography_Theme_Options( $this->get_theme_name(), $this->get_version() );
+        $theme_forms = new Pi_Theme_Forms($this->get_theme_name(), $this->get_version() );
 		// Register admin styles
 		$this->loader->add_action( 'admin_enqueue_scripts', $theme_admin, 'enqueue_styles' );
 		// Register admin scripts
@@ -227,9 +236,13 @@ class Pi_Photography {
         // Register import options
         $this->loader->add_action( 'admin_init', $theme_options, 'register_portfolio_settings' ); 
         // Register css options
-        $this->loader->add_action( 'admin_init', $theme_options, 'register_css_settings' );         
+        $this->loader->add_action( 'admin_init', $theme_options, 'register_css_settings' );
+        // Register social options
+        $this->loader->add_action( 'admin_init', $theme_options, 'register_social_settings' );
         // Add the page to the admin menu
         $this->loader->add_action( 'admin_menu', $theme_options, 'add_plugin_page' );
+        // Admin Form Page
+        $this->loader->add_action('admin_menu', $theme_forms , 'register_pi_forms_menu_page');
 
 		//Create Demo Content Ajax
 		$this->loader->add_action( 'wp_ajax_create_listings', $theme_admin, 'pi_ajax_create_files' );

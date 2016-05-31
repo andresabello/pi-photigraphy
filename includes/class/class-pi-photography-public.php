@@ -50,7 +50,7 @@ class Pi_Photography_Public{
 	public function enqueue_styles(){
 		wp_enqueue_style( 'font-awesome', STYLES . '/font-awesome.min.css', false, '4.4.0' );
 		wp_enqueue_style( 'pi-normalize', STYLES . '/normalize.min.css', false, '3.0.2' );
-		wp_enqueue_style( $this->theme_name, STYLES . '/custom.css', array( 'font-awesome', 'pi-normalize' ) );
+		wp_enqueue_style( $this->theme_name, STYLES . '/styles.css', array( 'font-awesome', 'pi-normalize' ) );
 		wp_enqueue_style( 'slick', STYLES . '/slick.css', false, '1.4.1' );
 		wp_enqueue_style( 'pi-theme', STYLES . '/pi-theme.css', false, $this->version );
 
@@ -60,6 +60,7 @@ class Pi_Photography_Public{
 		$font_color = $general_options['pi_font_color'];
 		$main_color = $general_options['pi_main_color_picker'];
 		$accent_color = $general_options['pi_second_color_picker'];
+        $light_accent_color = adjust_brightness($accent_color, 80);
         $footer_bg = $footer_options['footer_background'];
         $footer_font = $footer_options['footer_color'];
         $lower_footer_bg = $footer_options['lower_footer_background'];
@@ -70,6 +71,9 @@ class Pi_Photography_Public{
 			}
 			a {
 			    color: {$accent_color};
+			}
+			a:hover {
+			    color: {$light_accent_color};
 			}
 			#pi-navigation li a{
     			color: {$main_color};

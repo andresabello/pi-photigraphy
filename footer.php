@@ -1,5 +1,7 @@
     <?php
         $footer_options = get_option('pi_footer_settings');
+        $social_options = get_option('pi_social_settings');
+        $social_icons = pi_get_social_icons($social_options);
         $columns = (int)$footer_options['footer_columns'];
 
     ?>
@@ -29,6 +31,13 @@
                             <?php if ( is_active_sidebar( 'pi-footer-right' ) ) : ?>
                                 <?php dynamic_sidebar( 'pi-footer-right' ); ?>
                             <?php endif; ?>
+                            <div class="pi-social">
+                                <?php
+                                foreach($social_icons as $icon){
+                                    echo $icon;
+                                }
+                                ?>
+                            </div>
                         </div>
 
                     <?php elseif($columns == 3) :  ?>

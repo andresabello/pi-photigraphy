@@ -11,6 +11,7 @@
  * @author     Andres Abello <abellowins@gmail.com>
  */
 class Pi_Theme_Forms {
+
 	/**
 	 * The ID of this Theme.
 	 *
@@ -42,14 +43,13 @@ class Pi_Theme_Forms {
 	}
 
 	public function register_pi_forms_menu_page(){
-	    add_menu_page( 
-	    	'Forms Report', 
-	    	'Forms', 
-	    	'manage_options', 
-	    	'pi_forms_menu', 
-	    	array($this, 'pi_forms_menu_page'), 
-	    	'', 
-	    	6 
+		add_submenu_page(
+			'pi_page_options',
+	    	'Pi Form Reports',
+	    	'Forms',
+	    	'manage_options',
+	    	'pi_forms_menu',
+	    	array($this, 'pi_forms_menu_page')
 	    );
 	}
 	public function pi_forms_menu_page(){
